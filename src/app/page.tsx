@@ -1,16 +1,37 @@
-'use client';
+// src/app/page.tsx
 
 import Image from 'next/image';
 import Head from 'next/head';
-import jasperImage from '../../public/jasper.jpg';
+import Link from 'next/link';
 import Projects from './components/project';
 import Contact from './components/contact';
-import BlogComponent, { Blog } from './components/blog';
-import { useState } from 'react';
+import BlogComponent from './components/blog';
 
-export default function Home({ children }: { children: React.ReactNode }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Blog[]>([]);
+// Define the Blog object type
+export interface Blog {
+  _id?: string;
+  title: string;
+  content: string;
+}
+
+async function fetchBlogPosts(): Promise<Blog[]> {
+  const API_URL = 'https://portfolio-backend-j7e4.onrender.com/record/';
+  try {
+    const res = await fetch(API_URL, {
+      cache: 'no-store', // Disable caching for fresh data
+    });
+    if (!res.ok) {
+      throw new Error('Failed to fetch blog posts');
+    }
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
+    return [];
+  }
+}
+
+export default async function Home() {
+  const posts = await fetchBlogPosts();
 
   return (
     <>
@@ -27,7 +48,7 @@ export default function Home({ children }: { children: React.ReactNode }) {
           <h1 className="text-5xl font-bold mb-6">Jasper Portfolio</h1>
           <div className="flex justify-center mb-6">
             <Image
-              src={jasperImage}
+              src="/jasper.jpg"
               alt="Profile Picture"
               className="rounded-full"
               width={150}
@@ -60,30 +81,10 @@ export default function Home({ children }: { children: React.ReactNode }) {
 
         {/* Blog Section */}
         <section>
-          <BlogComponent setData={setData} setLoading={setIsLoading} />
-          {isLoading ? (
-            <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-              Loading...
-            </div>
-          ) : (
-            <div className="bg-gray-900 min-h-screen p-4">
-              {data.length === 0 ? (
-                <div className="text-center text-white">No blogs available</div>
-              ) : (
-                <div className="max-w-xl mx-auto space-y-4">
-                  {data.map(blog => (
-                    <div
-                      key={blog._id}
-                      className="bg-gray-800 p-3 rounded-lg shadow-md hover:bg-gray-700 transition w-full md:w-auto"
-                    >
-                      <h2 className="text-lg font-bold text-white truncate">{blog.title}</h2>
-                      <p className="text-white mt-2">{blog.content}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+          <div>
+            <h1>My Blog</h1>
+            <BlogComponent posts={posts} />
+          </div>
         </section>
       </main>
     </>
