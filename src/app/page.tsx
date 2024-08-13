@@ -15,7 +15,12 @@ export interface Blog {
 }
 
 async function fetchBlogPosts(): Promise<Blog[]> {
-  const API_URL = 'https://portfolio-backend-j7e4.onrender.com/record/';
+  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  if (!API_URL) {
+    console.error('Error: NEXT_PUBLIC_API_BASE_URL is not defined.');
+    return [];
+  }
   try {
     const res = await fetch(API_URL, {
       cache: 'no-store', // Disable caching for fresh data

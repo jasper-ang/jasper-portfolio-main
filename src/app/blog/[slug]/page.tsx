@@ -9,7 +9,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     async function fetchBlogPost(): Promise<void> {
-      const API_URL = `https://portfolio-backend-j7e4.onrender.com/record/${params.slug}`;
+      const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}${params.slug}`;
       try {
         const res = await fetch(API_URL, {
           cache: 'no-store', // Disable caching for fresh data
