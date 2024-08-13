@@ -1,45 +1,40 @@
-'use client';
+// 'use client';
 
-import Head from 'next/head';
-import React, { useState } from 'react';
-import BlogComponent, { Blog } from '../components/blog';
+// import React, { useState } from 'react';
+// import BlogForm from './blogform';
+// import BlogList from './bloglist';
+// import useBlogs, { Blog } from '../hooks/useBlog';
 
-export default function Blogpage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Blog[]>([]);
+// const TestPage: React.FC = () => {
+//   const { blogs, loading, error, createBlog, updateBlog, deleteBlog } = useBlogs();
+//   const [editingBlog, setEditingBlog] = useState<Blog | null>(null);
 
-  return (
-    <>
-      <Head>
-        <title>Blog</title>
-      </Head>
-      <main className="min-h-screen">
-        <BlogComponent setData={setData} setLoading={setIsLoading} />
+//   const handleSaveBlog = (blog: Blog) => {
+//     if (blog._id) {
+//       updateBlog(blog._id, blog);
+//     } else {
+//       createBlog(blog);
+//     }
+//     setEditingBlog(null);
+//   };
 
-        {isLoading ? (
-          <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-            Loading...
-          </div>
-        ) : (
-          <div className="bg-gray-900 min-h-screen p-4">
-            {data.length === 0 ? (
-              <div className="text-center text-white">No blogs available</div>
-            ) : (
-              <div className="max-w-xl mx-auto space-y-4">
-                {data.map(blog => (
-                  <div
-                    key={blog._id}
-                    className="bg-gray-800 p-3 rounded-lg shadow-md hover:bg-gray-700 transition w-full md:w-auto"
-                  >
-                    <h2 className="text-lg font-bold text-white truncate">{blog.title}</h2>
-                    <p className="text-white mt-2">{blog.content}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </main>
-    </>
-  );
-}
+//   const handleEditBlog = (blog: Blog) => {
+//     setEditingBlog(blog);
+//   };
+
+//   return (
+//     <div>
+//       {loading && <>Loading</>}
+//       {blogs && (
+//         <>
+//           <h1>Test MongoDB Connection</h1>
+//           <BlogList blogs={blogs} onDelete={deleteBlog} onEdit={handleEditBlog} />
+//           <BlogForm initialBlog={editingBlog} onSave={handleSaveBlog} />
+//         </>
+//       )}
+//       {error && <>something went wrong</>}
+//     </div>
+//   );
+// };
+
+// export default TestPage;
