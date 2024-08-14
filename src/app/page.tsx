@@ -57,7 +57,7 @@ export default async function Home() {
               height={150}
             />
           </div>
-          <p className="mx-auto mb-4 max-w-2xl">
+          <p className="flex-right mx-auto mb-4 max-w-2xl">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repellat sapiente
             provident, voluptatem temporibus illo quod, voluptates reprehenderit aliquam enim nisi
             eaque laudantium doloreque esse!
