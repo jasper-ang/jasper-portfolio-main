@@ -2,51 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  background-color: #47a3f3;
+  color: #fefefe;
+}
+
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 36, 41, 47;
-  --background-end-rgb: 36, 41, 47;
-  --accent-color-rgb: 216, 185, 255;
+  --sh-class: #4c97f8; /* Dark mode color */
+  --sh-identifier: #ffffff;
+  --sh-sign: #8996a3;
+  --sh-string: #0fa295; /* Dark mode color */
+  --sh-keyword: #f47067; /* Dark mode color */
+  --sh-comment: #a19595;
+  --sh-jsxliterals: #6266d1;
+  --sh-property: #e25a1c;
+  --sh-entity: var(--sh-property);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 36, 41, 47;
-    --background-end-rgb: 36, 41, 47;
-    --accent-color-rgb: 216, 185, 255;
-  }
+html {
+  min-width: 360px;
+  color-scheme: dark;
+  background-color: #1a1a1a; /* Dark background */
+  color: #e5e7eb; /* Light text color */
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
+.prose a {
+  color: #9ca3af; /* Dark mode link color */
+  text-decoration: underline;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.prose pre {
+  background-color: #1f2937; /* Dark mode background */
+  color: #d1d5db; /* Light text color */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
 
-  .bg-github-dark {
-    background-color: rgb(var(--background-start-rgb));
-  }
+.prose code {
+  background-color: #374151; /* Dark mode background */
+  color: #d1d5db; /* Light text color */
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
 
-  .text-github-foreground {
-    color: rgb(var(--foreground-rgb));
-  }
+.prose p {
+  margin: 1rem 0;
+  color: #e5e7eb; /* Light text color */
+}
 
-  .bg-github-accent {
-    background-color: rgb(var(--accent-color-rgb));
-  }
+.prose h1 {
+  font-size: 2.25rem;
+  margin: 1.5rem 0 1rem;
+  color: #ffffff; /* Light text color */
+}
 
-  .hover\:bg-github-accent-hover:hover {
-    background-color: rgb(193, 161, 255);
-    /* Slightly darker for hover */
-  }
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin: 1.5rem 0 1rem;
+  color: #e5e7eb; /* Light text color */
+}
 
-  .hover\:underline:hover {
-    text-decoration: underline;
-  }
+.prose ul,
+.prose ol {
+  margin-left: 1.5rem;
+  color: #d1d5db; /* Light text color */
+}
+
+input {
+  background-color: #374151; /* Dark mode input background */
+  color: #e5e7eb; /* Light text color */
+  border: 1px solid #4b5563; /* Border color */
+  appearance: none;
+}
+
+table {
+  background-color: #1f2937; /* Dark mode table background */
+  color: #d1d5db; /* Light text color */
+  overflow-x: auto;
+}
+
+.title {
+  text-align: center;
+  color: #ffffff; /* Light text color */
 }
