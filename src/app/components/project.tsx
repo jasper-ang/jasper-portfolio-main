@@ -30,7 +30,7 @@ const Projects: React.FC = () => {
           </button>
         ))}
       </div>
-      <div className="details-section mb-6 font-bold">
+      <div className="details-section mb-6">
         {activeButton === 'website' ? (
           <div>
             <p>This is the website project description.</p>
