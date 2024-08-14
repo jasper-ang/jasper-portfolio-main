@@ -54,12 +54,12 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section className="bg-[#0d1117] p-8 text-center flex flex-col items-center min-h-screen">
-      <h2 className="text-4xl font-bold mb-6 text-[#c9d1d9]">Contact Me</h2>
-      {successMessage && <p className="text-[#238636] mb-4">{successMessage}</p>}
+    <section className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
+      <h2 className="mb-6 text-4xl font-bold text-[#c9d1d9]">Contact Me</h2>
+      {successMessage && <p className="mb-4 text-[#238636]">{successMessage}</p>}
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg mx-auto bg-[#161b22] p-8 rounded-lg shadow-xl space-y-6"
+        className="mx-auto w-full max-w-lg space-y-6 rounded-lg bg-[#1a1a1a] p-8 font-bold shadow-xl"
       >
         <input
           type="text"
@@ -68,7 +68,7 @@ const Contact: React.FC = () => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 border border-[#30363d] rounded-lg bg-[#0d1117] text-[#c9d1d9] placeholder-gray-500 focus:outline-none focus:border-[#58a6ff] transition-colors"
+          className="w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
         />
         <input
           type="email"
@@ -77,7 +77,7 @@ const Contact: React.FC = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 border border-[#30363d] rounded-lg bg-[#0d1117] text-[#c9d1d9] placeholder-gray-500 focus:outline-none focus:border-[#58a6ff] transition-colors"
+          className="w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
         />
         <textarea
           name="message"
@@ -85,11 +85,11 @@ const Contact: React.FC = () => {
           value={formData.message}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 border border-[#30363d] rounded-lg bg-[#0d1117] text-[#c9d1d9] placeholder-gray-500 focus:outline-none focus:border-[#58a6ff] transition-colors h-32"
+          className="h-32 w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
         />
         <button
           type="submit"
-          className="w-full px-4 py-3 bg-[#58a6ff] text-white rounded-lg hover:bg-[#1f6feb] transition-colors"
+          className="w-full rounded-lg bg-[#6d44c1] px-4 py-3 text-white transition-colors hover:bg-[#6d44c1]"
         >
           Send
         </button>

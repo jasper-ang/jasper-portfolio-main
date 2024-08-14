@@ -13,16 +13,16 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <div id="projects" className="text-[#c9d1d9] bg-[#0d1117] p-8">
-      <h2 className="text-3xl font-bold mb-6">Projects</h2>
-      <div className="button-group flex space-x-4 mb-6">
+    <div id="projects" className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
+      <h2 className="mb-6 text-3xl font-bold">Projects</h2>
+      <div className="button-group mb-6 flex space-x-4">
         {['website', 'Aquila'].map(project => (
           <button
             key={project}
-            className={`py-2 px-4 rounded ${
+            className={`rounded px-4 py-2 ${
               activeButton === project
-                ? 'bg-[#58a6ff] text-white'
-                : 'bg-[#30363d] text-[#c9d1d9] hover:bg-[#1f6feb]'
+                ? 'bg-[#6d44c1] text-white'
+                : 'bg-[#2d333b] text-[#e5e7eb] hover:bg-[#3b4149]'
             } transition-colors`}
             onClick={() => handleButtonClick(project)}
           >
@@ -30,7 +30,7 @@ const Projects: React.FC = () => {
           </button>
         ))}
       </div>
-      <div className="details-section mb-6">
+      <div className="details-section mb-6 font-bold">
         {activeButton === 'website' ? (
           <div>
             <p>This is the website project description.</p>
@@ -57,12 +57,12 @@ const Projects: React.FC = () => {
       </div>
       <button
         onClick={toggleDetails}
-        className="bg-[#58a6ff] hover:bg-[#1f6feb] py-2 px-4 rounded mb-4 text-white transition-colors"
+        className="mb-4 rounded bg-[#6d44c1] px-4 py-2 text-white transition-colors hover:bg-[#6d44c1]"
       >
         {showDetails ? 'Hide Details ▽' : 'Show Details ▷'}
       </button>
       {showDetails && (
-        <div className="details-content p-4 border border-[#30363d] rounded bg-[#161b22]">
+        <div className="details-content rounded border border-[#30363d] bg-[#2d333b] p-4">
           <p>Here are some additional details about the project.</p>
           {/* Add more detailed content here */}
         </div>
