@@ -9,7 +9,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     async function fetchBlogPost(): Promise<void> {
-      const API_URL = `https://portfolio-backend-j7e4.onrender.com/record/${params.slug}`;
+      const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}${params.slug}`;
       try {
         const res = await fetch(API_URL, {
           cache: 'no-store', // Disable caching for fresh data
@@ -30,8 +30,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-        <div className="bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-200 p-4 rounded-lg shadow-md">
+      <div className="flex min-h-screen items-center justify-center bg-[#1a1a1a]">
+        <div className="rounded bg-red-100 p-6 text-red-700 shadow-md dark:bg-red-800 dark:text-red-200">
           Error: {error}
         </div>
       </div>
@@ -40,19 +40,19 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   if (!blog) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-        <div className="text-gray-500 dark:text-gray-400">Loading...</div>
+      <div className="flex min-h-screen items-center justify-center bg-[#1a1a1a]">
+        <div className="text-lg text-[#e5e7eb]">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-black dark:text-white">
-      <div className="max-w-3xl mx-auto p-6">
-        <h1 className="text-4xl font-extrabold mb-6 text-gray-900 dark:text-gray-100">
-          {blog.title}
-        </h1>
-        <div className="prose dark:prose-invert prose-lg">{blog.content}</div>
+    <div className="min-h-screen bg-[#1a1a1a] text-[#e5e7eb]">
+      <div className="mx-auto max-w-2xl p-8 md:p-12 lg:p-16">
+        <h1 className="mb-8 text-4xl font-extrabold leading-tight text-[#e5e7eb]">{blog.title}</h1>
+        <div className="prose prose-lg dark:prose-invert leading-relaxed text-[#e5e7eb]">
+          {blog.content}
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,5 @@
-// src/app/page.tsx
-
 import Image from 'next/image';
 import Head from 'next/head';
-import Link from 'next/link';
 import Projects from './components/project';
 import Contact from './components/contact';
 import BlogComponent from './components/blog';
@@ -15,7 +12,12 @@ export interface Blog {
 }
 
 async function fetchBlogPosts(): Promise<Blog[]> {
-  const API_URL = 'https://portfolio-backend-j7e4.onrender.com/record/';
+  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  if (!API_URL) {
+    console.error('Error: NEXT_PUBLIC_API_BASE_URL is not defined.');
+    return [];
+  }
   try {
     const res = await fetch(API_URL, {
       cache: 'no-store', // Disable caching for fresh data
@@ -42,11 +44,11 @@ export default async function Home() {
           content="Jasper's personal portfolio showcasing projects and skills."
         />
       </Head>
-      <main className="min-h-screen">
+      <main className="min-h-screen bg-[#1a1a1a] text-[#e5e7eb]">
         {/* Hero Section */}
-        <section className="text-center p-8">
-          <h1 className="text-5xl font-bold mb-6">Jasper Portfolio</h1>
-          <div className="flex justify-center mb-6">
+        <section className="p-8 text-center">
+          <h1 className="mb-6 text-5xl font-bold">Jasper Portfolio</h1>
+          <div className="mb-6 flex justify-center">
             <Image
               src="/jasper.jpg"
               alt="Profile Picture"
@@ -55,12 +57,12 @@ export default async function Home() {
               height={150}
             />
           </div>
-          <p className="max-w-2xl mx-auto mb-4">
+          <p className="flex-right mx-auto mb-4 max-w-2xl">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repellat sapiente
             provident, voluptatem temporibus illo quod, voluptates reprehenderit aliquam enim nisi
             eaque laudantium doloreque esse!
           </p>
-          <p className="max-w-2xl mx-auto mb-4">
+          <p className="mx-auto mb-4 max-w-2xl">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi nemo provident est
             ipsam, non impedit delectus voluptatem soluta, maxime ad obcaecati minus autem
             temporibus veritatis facere! Saepe aliquam quasi nihil?
@@ -68,8 +70,8 @@ export default async function Home() {
         </section>
 
         {/* About Me Section */}
-        <section className="bg-[#2d333b] p-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">About Me</h2>
+        <section className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
+          <h2 className="mb-4 text-3xl font-bold">About Me</h2>
           <p>This is the about section.</p>
         </section>
 
@@ -80,11 +82,9 @@ export default async function Home() {
         <Contact />
 
         {/* Blog Section */}
-        <section>
-          <div>
-            <h1>My Blog</h1>
-            <BlogComponent posts={posts} />
-          </div>
+        <section className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
+          <h2 className="mb-4 text-3xl font-bold">My Blog</h2>
+          <BlogComponent posts={posts} />
         </section>
       </main>
     </>
