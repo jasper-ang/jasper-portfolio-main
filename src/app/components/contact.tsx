@@ -59,7 +59,7 @@ const Contact: React.FC = () => {
       {successMessage && <p className="mb-4 text-[#238636]">{successMessage}</p>}
       <form
         onSubmit={handleSubmit}
-        className="mx-auto w-full max-w-lg space-y-6 rounded-lg bg-[#1a1a1a] p-8 font-bold shadow-xl"
+        className="mx-auto w-full max-w-lg space-y-6 rounded-lg bg-[#1a1a1a] p-8 font-bold"
       >
         <input
           type="text"
@@ -68,7 +68,7 @@ const Contact: React.FC = () => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
+          className="w-full rounded-lg border border-[#30363d] bg-[#c4c8cf] px-4 py-3 text-[#1a1a1a] placeholder-black placeholder-opacity-60 transition-colors focus:border-[#6d44c1] focus:outline-none"
         />
         <input
           type="email"
@@ -77,7 +77,7 @@ const Contact: React.FC = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
+          className="w-full rounded-lg border border-[#30363d] bg-[#c4c8cf] px-4 py-3 text-[#1a1a1a] placeholder-black placeholder-opacity-60 transition-colors focus:border-[#6d44c1] focus:outline-none"
         />
         <textarea
           name="message"
@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
           value={formData.message}
           onChange={handleChange}
           required
-          className="h-32 w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
+          className="w-full rounded-lg border border-[#30363d] bg-[#c4c8cf] px-4 py-3 text-[#1a1a1a] placeholder-black placeholder-opacity-60 transition-colors focus:border-[#6d44c1] focus:outline-none"
         />
         <button
           type="submit"

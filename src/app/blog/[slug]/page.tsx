@@ -1,7 +1,7 @@
 'use client';
 
+import { Blog } from '@/app/api/blogfetch';
 import { useEffect, useState } from 'react';
-import { Blog } from '@/app/page';
 
 export default function Page({ params }: { params: { slug: string } }) {
   const [blog, setBlog] = useState<Blog | null>(null);
@@ -9,7 +9,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     async function fetchBlogPost(): Promise<void> {
-      const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}${params.slug}`;
+      const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/record/${params.slug}`;
+      console.log('url:', API_URL);
       try {
         const res = await fetch(API_URL, {
           cache: 'no-store', // Disable caching for fresh data
