@@ -1,12 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
 import { Blog, createBlogPost } from '@/app/api/blogfetch';
-
-// Dynamically import ReactQuill with SSR disabled
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const CreateNew: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -38,15 +33,17 @@ const CreateNew: React.FC = () => {
   };
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-[#1a1a1a] p-10 text-[#e5e7eb]">
+    <section className="bg-base-200 flex min-h-screen items-center justify-center p-10">
       <div className="w-full max-w-2xl space-y-8">
-        <h2 className="text-center text-4xl font-extrabold text-[#c9d1d9]">Create New Blog Post</h2>
+        <h2 className="text-base-content text-center text-4xl font-extrabold">
+          Create New Blog Post
+        </h2>
         {successMessage && (
-          <p className="text-center text-lg font-semibold text-[#238636]">{successMessage}</p>
+          <p className="text-success text-center text-lg font-semibold">{successMessage}</p>
         )}
         <form
           onSubmit={handleSubmit}
-          className="mx-auto flex min-h-[500px] w-full max-w-2xl flex-col justify-between space-y-8 rounded-lg bg-[#0d1117] p-10 shadow-2xl"
+          className="card bg-base-100 w-full max-w-2xl space-y-8 p-10 shadow-2xl"
         >
           <input
             type="text"
@@ -55,21 +52,19 @@ const CreateNew: React.FC = () => {
             value={title}
             onChange={e => setTitle(e.target.value)}
             required
-            className="w-full rounded-lg border border-[#30363d] bg-[#c4c8cf] px-4 py-3 text-[#1a1a1a] placeholder-black placeholder-opacity-60 transition-colors focus:border-[#6d44c1] focus:outline-none"
+            className="input input-bordered w-full"
           />
           <div>
-            <ReactQuill
-              theme="snow"
-              value={content}
-              onChange={setContent}
+            <textarea
+              name="content"
               placeholder="Write your blog content here..."
-              className="h-auto min-h-max w-full rounded-lg border border-[#30363d] bg-[#c4c8cf] px-4 py-3 text-[#1a1a1a] placeholder-black placeholder-opacity-60 transition-colors focus:border-[#6d44c1] focus:outline-none"
+              value={content}
+              onChange={e => setContent(e.target.value)}
+              required
+              className="textarea textarea-bordered h-48 w-full"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-[#8b5cf6] px-4 py-3 text-lg font-semibold text-white transition-colors duration-200 hover:bg-[#7c3aed] focus:outline-none focus:ring-2 focus:ring-[#8b5cf6] focus:ring-opacity-50"
-          >
+          <button type="submit" className="btn btn-primary w-full">
             Create Blog
           </button>
         </form>
