@@ -20,7 +20,7 @@ export default async function Home() {
           content="Jasper's personal portfolio showcasing projects and skills."
         />
       </Head>
-      <main className="min-h-screen bg-[#1a1a1a] text-[#e5e7eb]">
+      <main className="bg-base-100 text-base-content min-h-screen">
         {/* Hero Section */}
         <section className="p-8 text-center">
           <h1 className="mb-6 text-5xl font-bold">Jasper Portfolio</h1>
@@ -46,7 +46,7 @@ export default async function Home() {
         </section>
 
         {/* About Me Section */}
-        <section className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
+        <section className="bg-base-100 text-base-content p-8">
           <h2 className="mb-4 text-3xl font-bold">About Me</h2>
           <p>This is the about section.</p>
         </section>
@@ -58,7 +58,7 @@ export default async function Home() {
         <Contact />
 
         {/* Blog Section */}
-        <section className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
+        <section className="bg-base-100 text-base-content p-8">
           <BlogPage />
         </section>
       </main>

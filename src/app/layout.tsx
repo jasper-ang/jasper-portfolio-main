@@ -1,10 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from './components/header';
 import Footer from './components/footer';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
@@ -37,7 +34,7 @@ const cx = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cx('bg-black text-white', inter.className)}>
+    <html lang="en" className={cx('bg-black text-white')}>
       <body className="mx-4 mt-8 max-w-xl antialiased lg:mx-auto">
         <Header />
         <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">{children}</main>
