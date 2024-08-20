@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Head from 'next/head';
 import Projects from './components/project';
 import Contact from './components/contact';
-import BlogComponent from './components/bloglist';
 import BlogList from './blog/page';
 import Link from 'next/link';
 import { Blog, fetchBlogPosts } from './api/blogfetch';

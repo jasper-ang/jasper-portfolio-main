@@ -1,60 +1,74 @@
 'use client';
 
 import { Blog } from '@/app/api/blogfetch';
-import { useEffect, useState } from 'react';
+import useSWR, { mutate } from 'swr';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+const fetcher = (url: string) =>
+  fetch(url).then(res => {
+    if (!res.ok) throw new Error('Failed to fetch data');
+    return res.json();
+  });
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const [blog, setBlog] = useState<Blog | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const router = useRouter(); // Next.js router to handle redirects
-
-  useEffect(() => {
-    async function fetchBlogPost(): Promise<void> {
-      const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/record/${params.slug}`;
-      try {
-        const res = await fetch(API_URL, {
-          cache: 'no-store', // Disable caching for fresh data
-        });
-        if (!res.ok) {
-          throw new Error('Failed to fetch blog post');
-        }
-        const data: Blog = await res.json();
-        setBlog(data);
-      } catch (error) {
-        console.error('Error fetching blog post:', error);
-        setError('Failed to fetch blog post');
-      }
+  const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL_TEST}/record/${params.slug}`;
+  const { data: blog, error } = useSWR<Blog>(API_URL, fetcher, {
+    revalidateOnFocus: false,
+  });
+  const router = useRouter();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedBlog, setEditedBlog] = useState<Blog | null>(null);
+  const handleEdit = () => {
+    if (blog) {
+      setIsEditing(true);
+      setEditedBlog(blog);
     }
+  };
 
-    fetchBlogPost();
-  }, [params.slug]);
+  const handleSave = async () => {
+    if (!editedBlog) return;
 
-  // Function to handle the delete action
-  async function handleDelete(): Promise<void> {
-    const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/record/${params.slug}`;
+    try {
+      const res = await fetch(API_URL, {
+        method: 'PATCH', // Use 'PATCH' as your backend expects partial updates
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editedBlog),
+      });
+      if (!res.ok) throw new Error('Failed to update blog post');
+
+      // Mutate the cache to reflect the updated blog post
+      mutate(API_URL);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating blog post:', error);
+    }
+  };
+
+  const handleDelete = async () => {
     try {
       const res = await fetch(API_URL, {
         method: 'DELETE',
       });
-      if (!res.ok) {
-        throw new Error('Failed to delete blog post');
-      }
-      // Short delay to ensure the server processes the deletion before redirecting
-      await new Promise(resolve => setTimeout(resolve, 500));
+      if (!res.ok) throw new Error('Failed to delete blog post');
 
-      // Redirect to blog listing page or handle the state after deletion
+      // Remove the deleted blog post from the cache
+      mutate(API_URL, null, false); // Pass null to remove it from the cache
+
+      // Redirect to the blog listing page
       router.replace('/blog');
     } catch (error) {
       console.error('Error deleting blog post:', error);
-      setError('Failed to delete blog post');
+      // Handle error state if necessary
     }
-  }
+  };
 
   if (error) {
     return (
       <div className="bg-base-200 flex min-h-screen items-center justify-center">
-        <div className="bg-error text-error-content rounded-lg p-6 shadow-lg">Error: {error}</div>
+        <div className="bg-error text-error-content rounded-lg p-6 shadow-lg">
+          Error: {error.message}
+        </div>
       </div>
     );
   }
@@ -76,15 +90,61 @@ export default function Page({ params }: { params: { slug: string } }) {
         <div className="prose prose-lg dark:prose-invert text-base-content leading-relaxed">
           {blog.content}
         </div>
+        <button className="btn btn-primary btn-outline mt-8" onClick={handleEdit}>
+          Edit Post
+        </button>
         <button
-          className="btn btn-secondary mt-8"
+          className="btn btn-secondary btn-outline ml-4 mt-8"
           onClick={() => (document.getElementById('delete_modal') as HTMLDialogElement).showModal()}
         >
           Delete Post
         </button>
       </div>
 
-      {/* Modal Code */}
+      {/* Modal for Editing */}
+      {isEditing && (
+        <dialog id="edit_modal" className="modal" open>
+          <div className="modal-box mx-auto mt-16 w-full max-w-lg">
+            <h3 className="text-lg font-bold">Edit Blog Post</h3>
+            <form
+              className="py-4"
+              onSubmit={e => {
+                e.preventDefault();
+                handleSave();
+              }}
+            >
+              <div className="mb-4">
+                <label className="label">Title</label>
+                <input
+                  className="input input-bordered w-full"
+                  type="text"
+                  value={editedBlog?.title || ''}
+                  onChange={e => setEditedBlog({ ...editedBlog!, title: e.target.value })}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="label">Content</label>
+                <textarea
+                  className="textarea textarea-bordered w-full"
+                  rows={10}
+                  value={editedBlog?.content || ''}
+                  onChange={e => setEditedBlog({ ...editedBlog!, content: e.target.value })}
+                />
+              </div>
+              <div className="modal-action">
+                <button className="btn btn-primary btn-outline" type="submit">
+                  Save
+                </button>
+                <button className="btn" onClick={() => setIsEditing(false)}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+      )}
+
+      {/* Modal for delete */}
       <dialog id="delete_modal" className="modal">
         <div className="modal-box">
           <h3 className="text-lg font-bold">Confirm Deletion</h3>

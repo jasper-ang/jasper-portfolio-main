@@ -55,9 +55,9 @@ const Contact: React.FC = () => {
   return (
     <div className="hero bg-base-200 flex min-h-screen justify-center">
       <div className="flex-col">
-        <div className="text-center">
-          <h1 className="text-5xl font-semibold">Contact Me</h1>
-          <p className="max-w-screen px-10 py-6">
+        <div className="p-8 text-left">
+          <h2 className="mb-6 text-3xl font-bold">Contact Me</h2>
+          <p className="mb-6 flex text-left">
             Feel free to reach out for any inquiries or questions. I’m here to help and look forward
             to connecting with you!
           </p>
