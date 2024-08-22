@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 
-// Define form structure locally
 interface FormStructure {
   name: string;
   email: string;
@@ -54,47 +53,68 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
-      <h2 className="mb-6 text-4xl font-bold text-[#c9d1d9]">Contact Me</h2>
-      {successMessage && <p className="mb-4 text-[#238636]">{successMessage}</p>}
-      <form
-        onSubmit={handleSubmit}
-        className="mx-auto w-full max-w-lg space-y-6 rounded-lg bg-[#1a1a1a] p-8 font-bold shadow-xl"
-      >
-        <input
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
-        />
-        <textarea
-          name="message"
-          placeholder="Your Message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-          className="h-32 w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-4 py-3 text-[#c9d1d9] placeholder-gray-500 transition-colors focus:border-[#6d44c1] focus:outline-none"
-        />
-        <button
-          type="submit"
-          className="w-full rounded-lg bg-[#6d44c1] px-4 py-3 text-white transition-colors hover:bg-[#6d44c1]"
-        >
-          Send
-        </button>
-      </form>
-    </section>
+    <div className="hero bg-base-200 flex min-h-screen justify-center">
+      <div className="flex-col">
+        <div className="p-8 text-left">
+          <h2 className="mb-6 text-3xl font-bold">Contact Me</h2>
+          <p className="mb-6 flex text-left">
+            Feel free to reach out for any inquiries or questions. I’m here to help and look forward
+            to connecting with you!
+          </p>
+          {successMessage && <p className="text-success mb-4">{successMessage}</p>}
+        </div>
+        <div className="card bg-base-100 mx-auto w-full max-w-full shadow-2xl lg:max-w-lg">
+          <form onSubmit={handleSubmit} className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="input input-bordered"
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="input input-bordered"
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Message</span>
+              </label>
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                className="textarea textarea-bordered"
+              />
+            </div>
+            <div className="form-control mt-6">
+              <button type="submit" className="btn btn-primary w-full">
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

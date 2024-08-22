@@ -2,39 +2,14 @@ import Image from 'next/image';
 import Head from 'next/head';
 import Projects from './components/project';
 import Contact from './components/contact';
-import BlogComponent from './components/blog';
-
-// Define the Blog object type
-export interface Blog {
-  _id?: string;
-  title: string;
-  content: string;
-}
-
-async function fetchBlogPosts(): Promise<Blog[]> {
-  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-  if (!API_URL) {
-    console.error('Error: NEXT_PUBLIC_API_BASE_URL is not defined.');
-    return [];
-  }
-  try {
-    const res = await fetch(API_URL, {
-      cache: 'no-store', // Disable caching for fresh data
-    });
-    if (!res.ok) {
-      throw new Error('Failed to fetch blog posts');
-    }
-    return res.json();
-  } catch (error) {
-    console.error('Error fetching blog posts:', error);
-    return [];
-  }
-}
+import BlogList from './blog/page';
+import Link from 'next/link';
+import { Blog, fetchBlogPosts } from './api/blogfetch';
+import BlogPage from './blog/page';
 
 export default async function Home() {
-  const posts = await fetchBlogPosts();
-
+  const posts: Blog[] = await fetchBlogPosts();
+  console.log('Fetched Posts:', posts);
   return (
     <>
       <Head>
@@ -44,7 +19,7 @@ export default async function Home() {
           content="Jasper's personal portfolio showcasing projects and skills."
         />
       </Head>
-      <main className="min-h-screen bg-[#1a1a1a] text-[#e5e7eb]">
+      <main className="bg-base-100 text-base-content min-h-screen">
         {/* Hero Section */}
         <section className="p-8 text-center">
           <h1 className="mb-6 text-5xl font-bold">Jasper Portfolio</h1>
@@ -70,7 +45,7 @@ export default async function Home() {
         </section>
 
         {/* About Me Section */}
-        <section className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
+        <section className="bg-base-100 text-base-content p-8">
           <h2 className="mb-4 text-3xl font-bold">About Me</h2>
           <p>This is the about section.</p>
         </section>
@@ -82,9 +57,8 @@ export default async function Home() {
         <Contact />
 
         {/* Blog Section */}
-        <section className="bg-[#1a1a1a] p-8 text-[#e5e7eb]">
-          <h2 className="mb-4 text-3xl font-bold">My Blog</h2>
-          <BlogComponent posts={posts} />
+        <section className="bg-base-100 text-base-content p-8">
+          <BlogPage />
         </section>
       </main>
     </>
