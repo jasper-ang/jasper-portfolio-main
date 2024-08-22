@@ -32,7 +32,7 @@ export async function fetchBlogPosts() {
 
 // Create a new Blog post by sending a POST request to the API
 export async function createBlogPost(blog: Blog): Promise<Blog | null> {
-  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL_TEST;
+  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   if (!API_URL) {
     console.error('Error: NEXT_PUBLIC_API_BASE_URL is not defined.');
