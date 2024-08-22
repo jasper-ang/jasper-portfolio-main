@@ -12,7 +12,7 @@ const fetcher = (url: string) =>
   });
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL_TEST}/record/${params.slug}`;
+  const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/record/${params.slug}`;
   const { data: blog, error } = useSWR<Blog>(API_URL, fetcher, {
     revalidateOnFocus: false,
   });
@@ -65,8 +65,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   if (error) {
     return (
-      <div className="bg-base-200 flex min-h-screen items-center justify-center">
-        <div className="bg-error text-error-content rounded-lg p-6 shadow-lg">
+      <div className="flex min-h-screen items-center justify-center bg-base-200">
+        <div className="rounded-lg bg-error p-6 text-error-content shadow-lg">
           Error: {error.message}
         </div>
       </div>
@@ -75,26 +75,26 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   if (!blog) {
     return (
-      <div className="bg-base-200 flex min-h-screen items-center justify-center">
-        <div className="text-primary-content text-lg">Loading...</div>
+      <div className="flex min-h-screen items-center justify-center bg-base-200">
+        <div className="text-lg text-primary-content">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-base-200 text-base-content min-h-screen">
+    <div className="min-h-screen bg-base-200 text-base-content">
       <div className="mx-auto max-w-2xl p-8 md:p-12 lg:p-16">
-        <h1 className="text-base-content mb-8 text-4xl font-extrabold leading-tight">
+        <h1 className="mb-8 text-4xl font-extrabold leading-tight text-base-content">
           {blog.title}
         </h1>
-        <div className="prose prose-lg dark:prose-invert text-base-content leading-relaxed">
+        <div className="prose prose-lg leading-relaxed text-base-content dark:prose-invert">
           {blog.content}
         </div>
-        <button className="btn btn-primary btn-outline mt-8" onClick={handleEdit}>
+        <button className="btn btn-outline btn-primary mt-8" onClick={handleEdit}>
           Edit Post
         </button>
         <button
-          className="btn btn-secondary btn-outline ml-4 mt-8"
+          className="btn btn-outline btn-secondary ml-4 mt-8"
           onClick={() => (document.getElementById('delete_modal') as HTMLDialogElement).showModal()}
         >
           Delete Post
@@ -132,7 +132,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 />
               </div>
               <div className="modal-action">
-                <button className="btn btn-primary btn-outline" type="submit">
+                <button className="btn btn-outline btn-primary" type="submit">
                   Save
                 </button>
                 <button className="btn" onClick={() => setIsEditing(false)}>
