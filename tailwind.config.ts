@@ -22,7 +22,7 @@ const config: Config = {
           'neutral-content': '#d1d2d4',
           'base-100': '#1a1a1a',
           'base-200': '#151515',
-          'base-300': '#101010',
+          'base-300': '#000000',
           'base-content': '#cbcbcb',
           info: '#89e0eb',
           'info-content': '#071213',

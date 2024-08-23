@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-300">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-xl normal-case">
-          Home
+          Jasper Ang
         </Link>
       </div>
       <div className="flex-none">
