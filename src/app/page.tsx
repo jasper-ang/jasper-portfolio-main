@@ -19,11 +19,24 @@ export default async function Home() {
           content="Jasper's personal portfolio showcasing projects and skills."
         />
       </Head>
-      <main className="bg-base-100 text-base-content min-h-screen">
+      <main className="min-h-screen bg-base-100 text-base-content">
         {/* Hero Section */}
-        <section className="p-8 text-center">
-          <h1 className="mb-6 text-5xl font-bold">Jasper Portfolio</h1>
-          <div className="mb-6 flex justify-center">
+        <section className="my-5 p-8 text-center">
+          {/* <h1 className="p-8 text-5xl font-bold">Jasper Portfolio</h1> */}
+          <div className="diff my-4 aspect-[16/9] shadow-2xl">
+            <div className="diff-item-1">
+              <div className="grid place-content-center bg-secondary text-7xl font-black text-primary-content">
+                Welcome...
+              </div>
+            </div>
+            <div className="diff-item-2">
+              <div className="grid place-content-center bg-base-200 text-7xl font-black">
+                Welcome...
+              </div>
+            </div>
+            <div className="diff-resizer"></div>
+          </div>
+          <div className="flex justify-center p-8">
             <Image
               src="/jasper.jpg"
               alt="Profile Picture"
@@ -32,7 +45,7 @@ export default async function Home() {
               height={150}
             />
           </div>
-          <p className="flex-right mx-auto mb-4 max-w-2xl">
+          <p className="mx-auto mb-4 max-w-2xl">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repellat sapiente
             provident, voluptatem temporibus illo quod, voluptates reprehenderit aliquam enim nisi
             eaque laudantium doloreque esse!
@@ -45,7 +58,7 @@ export default async function Home() {
         </section>
 
         {/* About Me Section */}
-        <section className="bg-base-100 text-base-content p-8">
+        <section className="bg-base-100 p-8 text-base-content">
           <h2 className="mb-4 text-3xl font-bold">About Me</h2>
           <p>This is the about section.</p>
         </section>
@@ -57,7 +70,7 @@ export default async function Home() {
         <Contact />
 
         {/* Blog Section */}
-        <section className="bg-base-100 text-base-content p-8">
+        <section className="bg-base-100 p-8 text-base-content">
           <BlogPage />
         </section>
       </main>

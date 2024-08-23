@@ -11,18 +11,18 @@ function ArrowIcon() {
 
 export default function Footer() {
   const links = [
-    { href: '/rss', label: 'rss' },
-    { href: 'https://github.com/vercel/next.js', label: 'github' },
-    { href: 'https://vercel.com/templates/next.js/portfolio-starter-kit', label: 'view source' },
+    { href: 'https://www.linkedin.com/in/jasper-z-ang/', label: 'linkedin' },
+    { href: 'https://github.com/jasper-ang', label: 'github' },
+    { href: 'https://github.com/jasper-ang/jasper-portfolio-main', label: 'view source' },
   ];
 
   return (
     <footer className="mb-16 flex flex-col items-center">
-      <ul className="font-sm mt-8 flex flex-col items-center space-x-0 space-y-2 text-neutral-600 md:flex-row md:space-x-4 md:space-y-0 dark:text-neutral-300">
+      <ul className="mt-8 flex flex-col items-center space-x-0 space-y-2 text-base-content md:flex-row md:space-x-4 md:space-y-0">
         {links.map((link, index) => (
           <li key={index}>
             <a
-              className="flex items-center justify-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+              className="flex items-center justify-center transition-colors duration-300 hover:text-primary"
               rel="noopener noreferrer"
               target="_blank"
               href={link.href}
@@ -33,9 +33,7 @@ export default function Footer() {
           </li>
         ))}
       </ul>
-      <p className="mt-8 text-neutral-600 dark:text-neutral-300">
-        © {new Date().getFullYear()} MIT Licensed
-      </p>
+      <p className="mt-8 text-base-content">© {new Date().getFullYear()} MIT Licensed</p>
     </footer>
   );
 }
