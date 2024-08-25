@@ -69,8 +69,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-start justify-center bg-base-200 p-8 pt-4">
-      <div className="card w-full max-w-sm bg-base-100 shadow-2xl">
+    <div className="flex items-start justify-center bg-base-200 p-8 pt-4">
+      <div className="card my-8 w-full max-w-sm bg-base-100 shadow-2xl">
         <div className="card-body">
           <h2 className="mb-4 text-center text-2xl font-bold">Login Account</h2>
           <form onSubmit={handleSubmit}>
@@ -102,7 +102,7 @@ const Login: React.FC = () => {
                 required
               />
             </div>
-            <div className="form-control mt-6">
+            <div className="form-control my-6">
               <button type="submit" className="btn btn-primary">
                 Submit
               </button>
