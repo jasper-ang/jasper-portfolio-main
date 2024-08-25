@@ -3,8 +3,11 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import { Blog, fetchBlogPosts } from '../api/blogfetch';
+import { useAuth } from '../contexts/authentication'; // Import useAuth to access authentication context
 
 export default function BlogPage() {
+  const { user } = useAuth(); // Get the current user from the authentication context
+
   // Use SWR to fetch the blog posts
   const { data: posts, error } = useSWR<Blog[]>('/record', fetchBlogPosts);
 
@@ -16,11 +19,13 @@ export default function BlogPage() {
       <div className="mx-auto mb-8 max-w-2xl">
         <h2 className="mb-8 text-left text-4xl font-bold">My Blog</h2>
 
-        <div className="mb-6 flex justify-start">
-          <Link href="/blog/newblogpost" className="btn btn-ghost btn-outline">
-            New Page
-          </Link>
-        </div>
+        {user?.role === 'admin' && ( // Conditionally render the New Page button for admins only
+          <div className="mb-6 flex justify-start">
+            <Link href="/blog/newblogpost" className="btn btn-ghost btn-outline">
+              New Page
+            </Link>
+          </div>
+        )}
 
         <div className="rounded-lg bg-base-100 p-6 shadow-lg">
           <ul className="divide-y divide-neutral">
