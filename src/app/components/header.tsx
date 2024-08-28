@@ -8,25 +8,24 @@ import { useState, useEffect, useRef } from 'react';
 
 const Header = () => {
   const navigation = useRouter();
-  const { user, setUser } = useAuth(); // Access the user data from context
+  const { user, setUser } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDetailsElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null); // Update the ref to HTMLDivElement
 
   const handleLogout = () => {
-    // Clear the cookie
     nookies.destroy(null, 'token');
-
-    // Reset the user in the context
     setUser(null);
-
-    // Redirect to the home page or login page
     navigation.push('/');
   };
 
   const handleDocumentClick = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setDropdownOpen(false); // Close the dropdown if the click is outside
+      setDropdownOpen(false);
     }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(prev => !prev);
   };
 
   useEffect(() => {
@@ -41,46 +40,52 @@ const Header = () => {
     <div className="navbar bg-base-300">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-xl normal-case">
-          Jasper
+          Home
         </Link>
       </div>
-      <div className="flex-none">
+      <div className="flex flex-none items-center">
         <ul className="menu menu-horizontal px-1">
-          <li>
-            {user ? ( // Check if the user is logged in
-              <div>Welcome, {user.user}</div>
-            ) : (
-              <Link href="/login">Login</Link>
-            )}
-          </li>
+          <li>{user ? <div>Welcome, {user.user}</div> : <Link href="/login">Login</Link>}</li>
           <li>
             <Link href="/blog">Blog</Link>
           </li>
-          <li>
-            <details
-              ref={dropdownRef}
-              className="dropdown"
-              open={dropdownOpen}
-              onClick={e => {
-                e.preventDefault(); // Prevent default action of <details> tag
-                setDropdownOpen(!dropdownOpen); // Toggle dropdown state
-              }}
+        </ul>
+        <div className="dropdown dropdown-end relative" ref={dropdownRef}>
+          <label
+            tabIndex={0}
+            className="btn btn-ghost"
+            onClick={toggleDropdown} // Toggle dropdown on click
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-6 w-6"
             >
-              <summary className="cursor-pointer">More</summary>
-              <ul className="dropdown-menu absolute z-50 rounded-md bg-base-200 p-2 shadow-lg">
-                <li>
-                  <Link href="/about">About</Link>
-                </li>
-                <li>
-                  <Link href="/contact">Contact</Link>
-                </li>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </label>
+          {dropdownOpen && (
+            <ul
+              tabIndex={0}
+              className="menu-compact menu dropdown-content absolute right-0 z-50 mt-3 w-auto rounded-box border border-primary bg-base-200 p-2 shadow"
+            >
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+              <li>
+                <Link href="/contact">Contact</Link>
+              </li>
+              {user && (
                 <li>
                   <button onClick={handleLogout}>Logout</button>
                 </li>
-              </ul>
-            </details>
-          </li>
-        </ul>
+              )}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

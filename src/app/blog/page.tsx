@@ -1,25 +1,22 @@
 'use client';
 
-import useSWR from 'swr';
 import Link from 'next/link';
-import { Blog, fetchBlogPosts } from '../api/blogfetch';
-import { useAuth } from '../contexts/authentication'; // Import useAuth to access authentication context
+import { useAuth } from '../contexts/authentication';
+import { useBlog } from '../hooks/useBlog'; // Adjust this import path as necessary
 
 export default function BlogPage() {
   const { user } = useAuth(); // Get the current user from the authentication context
-
-  // Use SWR to fetch the blog posts
-  const { data: posts, error } = useSWR<Blog[]>('/record', fetchBlogPosts);
+  const { allPosts, error } = useBlog(); // Use useBlog hook to fetch all blog posts
 
   if (error) return <div className="mt-8 text-center text-error">Error loading posts.</div>;
-  if (!posts) return <div className="mt-8 text-center text-info">Loading...</div>;
+  if (!allPosts) return <div className="mt-8 text-center text-info">Loading...</div>;
 
   return (
     <div id="blog" className="bg-base-200 p-8 text-base-content">
-      <div className="mx-auto mb-8 max-w-2xl">
-        <h2 className="mb-8 text-left text-4xl font-bold">My Blog</h2>
+      <div className="mx-auto mb-8 max-w-2xl p-8">
+        <h2 className="mb-8 text-left text-3xl font-bold">My Blog</h2>
 
-        {user?.role === 'admin' && ( // Conditionally render the New Page button for admins only
+        {user?.role === 'admin' && (
           <div className="mb-6 flex justify-start">
             <Link href="/blog/newblogpost" className="btn btn-ghost btn-outline">
               New Page
@@ -29,7 +26,7 @@ export default function BlogPage() {
 
         <div className="rounded-lg bg-base-100 p-6 shadow-lg">
           <ul className="divide-y divide-neutral">
-            {posts.map(post => (
+            {allPosts.map(post => (
               <li key={post._id} className="py-4">
                 <Link
                   href={`/blog/${post._id}`}

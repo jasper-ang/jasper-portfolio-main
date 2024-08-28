@@ -12,7 +12,7 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <div id="projects" className="bg-base-100 text-base-content p-8">
+    <div id="projects" className="bg-base-200 text-base-content">
       <h2 className="mb-6 text-3xl font-bold">Projects</h2>
       <div className="button-group mb-6 flex space-x-4">
         {['website', 'Aquila'].map(project => (
@@ -56,7 +56,7 @@ const Projects: React.FC = () => {
         {showDetails ? 'Hide Details ▽' : 'Show Details ▷'}
       </button>
       {showDetails && (
-        <div className="details-content border-neutral bg-neutral rounded border p-4">
+        <div className="details-content rounded border border-neutral bg-neutral p-4">
           <p>Here are some additional details about the project.</p>
           {/* Add more detailed content here */}
         </div>

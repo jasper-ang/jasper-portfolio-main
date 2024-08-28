@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Blog, createBlogPost } from '@/app/api/blogfetch';
+import { Blog } from '@/app/api/blogfetch';
+import { useBlog } from '@/app/hooks/useBlog'; // Import the useBlog hook
 
 const CreateNew: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [successMessage, setSuccessMessage] = useState<string>('');
+  const { createBlog } = useBlog(); // Destructure createBlog from useBlog hook
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,12 +19,13 @@ const CreateNew: React.FC = () => {
     };
 
     try {
-      const createdBlog = await createBlogPost(newBlog);
+      const createdBlog = await createBlog(newBlog);
 
-      if (createdBlog) {
+      // Check if createdBlog is not null/undefined and has a valid _id
+      if (createdBlog && createdBlog._id) {
         setSuccessMessage('Blog post created successfully!');
 
-        // Redirect to the loading page with the new post ID
+        // Redirect to the new post page
         window.location.href = `/blog/${createdBlog._id}`;
       } else {
         console.error('Failed to create blog post');
@@ -33,40 +36,68 @@ const CreateNew: React.FC = () => {
   };
 
   return (
-    <section className="bg-base-200 flex min-h-screen items-center justify-center p-10">
+    <section className="flex min-h-screen justify-center bg-base-200 p-10">
       <div className="w-full max-w-2xl space-y-8">
-        <h2 className="text-base-content text-center text-4xl font-extrabold">
+        <h2 className="py-2 text-center text-4xl font-extrabold text-base-content">
           Create New Blog Post
         </h2>
         {successMessage && (
-          <p className="text-success text-center text-lg font-semibold">{successMessage}</p>
+          <div className="alert alert-success shadow-lg">
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 flex-shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 12l2 2l4-4m5 2a9 9 0 11-6 6a9 9 0 016-6z"
+                />
+              </svg>
+              <span>{successMessage}</span>
+            </div>
+          </div>
         )}
         <form
           onSubmit={handleSubmit}
-          className="card bg-base-100 w-full max-w-2xl space-y-8 p-10 shadow-2xl"
+          className="card w-full max-w-2xl space-y-8 bg-base-100 p-10 shadow-2xl"
         >
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            required
-            className="input input-bordered w-full"
-          />
-          <div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text text-lg font-semibold">Title</span>
+            </label>
+            <input
+              type="text"
+              name="title"
+              placeholder="Enter your blog title"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              required
+              className="input input-md input-bordered w-full"
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text text-lg font-semibold">Content</span>
+            </label>
             <textarea
               name="content"
               placeholder="Write your blog content here..."
               value={content}
               onChange={e => setContent(e.target.value)}
               required
-              className="textarea textarea-bordered h-48 w-full"
+              className="textarea textarea-bordered h-96 w-full"
             />
           </div>
-          <button type="submit" className="btn btn-primary w-full">
-            Create Blog
-          </button>
+          <div className="form-control">
+            <button type="submit" className="btn btn-primary w-full">
+              Create Blog
+            </button>
+          </div>
         </form>
       </div>
     </section>

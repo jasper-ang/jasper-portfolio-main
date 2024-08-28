@@ -53,17 +53,17 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="hero bg-base-200 flex min-h-screen justify-center">
+    <div className="hero flex min-h-fit justify-center bg-base-200">
       <div className="flex-col">
-        <div className="p-8 text-left">
-          <h2 className="mb-6 text-3xl font-bold">Contact Me</h2>
-          <p className="mb-6 flex text-left">
+        <div className="text-left">
+          <h2 className="text-3xl font-bold">Contact Me</h2>
+          <p className="my-6 flex py-6 text-left">
             Feel free to reach out for any inquiries or questions. I’m here to help and look forward
             to connecting with you!
           </p>
-          {successMessage && <p className="text-success mb-4">{successMessage}</p>}
+          {successMessage && <p className="mb-4 text-success">{successMessage}</p>}
         </div>
-        <div className="card bg-base-100 mx-auto w-full max-w-full shadow-2xl lg:max-w-lg">
+        <div className="shadow-1xl card mx-auto w-full max-w-full bg-base-100 lg:max-w-lg">
           <form onSubmit={handleSubmit} className="card-body">
             <div className="form-control">
               <label className="label">
