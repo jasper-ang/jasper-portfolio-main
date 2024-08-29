@@ -18,7 +18,7 @@ export default function Footer() {
 
   return (
     <footer className="mb-16 flex flex-col items-center">
-      <ul className="mt-8 flex flex-col items-center space-x-0 space-y-2 text-base-content md:flex-row md:space-x-4 md:space-y-0">
+      <ul className="mt-8 flex flex-row items-center space-x-4 space-y-0 text-base-content sm:flex-col sm:space-x-0 sm:space-y-2">
         {links.map((link, index) => (
           <li key={index}>
             <a

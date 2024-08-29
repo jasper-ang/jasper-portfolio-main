@@ -5,7 +5,7 @@
  * - This hook provides data and function to create, update, and delete blog posts.
  * - This hook use SWR to cache and revalidate states
  * - Creates a seperate of concern between the fetching logic with caching/revalidation
- * - Encapsulate all functions into a single useBlog function
+ * - Abstract all functions into a single useBlog function
  *
  * Functions and Data Returned:
  * - `singlePost`: Fetches and returns a single blog post by slug.

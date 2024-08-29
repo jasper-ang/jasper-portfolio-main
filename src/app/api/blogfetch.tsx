@@ -1,7 +1,7 @@
 /**
  * This module defines all HTTP methods (GET, POST, PATCH, DELETE) related to blog operations.
  * It interacts with the API to fetch, create, update, and delete blog data.
- * These logics are then encapsulated inside the useBlog hook for ease of use throughout the application.
+ * These logics are then abstracted into the useBlog hook for ease of use throughout the application.
  *
  * Functions:
  * - fetchBlogPosts: Retrieves all blog posts from the API.

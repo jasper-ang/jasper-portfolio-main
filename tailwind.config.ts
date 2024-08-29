@@ -4,6 +4,12 @@ const config: Config = {
   content: ['./src/**/*.{js,jsx,ts,tsx,mdx}', './public/index.html'],
   theme: {
     extend: {},
+    screens: {
+      lg: { max: '1023px' }, // Everything below 1024px
+      md: { max: '767px' }, // Everything below 768px
+      sm: { max: '639px' }, // Everything below 640px
+      // 'base' is now considered as the larger screens (1024px and up)
+    },
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
 

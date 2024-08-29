@@ -1,12 +1,10 @@
 import useTechSVG, { TechItem } from '../hooks/useTechSVG';
 import { FC, useState } from 'react';
 
-type SectionName = 'frontend' | 'backend' | 'devtools' | null; // Define the possible section names
+type SectionName = 'frontend' | 'backend' | 'devtools' | null;
 
 const TechIcons: FC = () => {
   const { frontend, backend, devtools } = useTechSVG();
-
-  // Default open the first section (Frontend)
   const [openSection, setOpenSection] = useState<SectionName>('frontend');
 
   const toggleSection = (sectionName: SectionName) => {
@@ -17,31 +15,31 @@ const TechIcons: FC = () => {
     return techStack.map(tech => (
       <div
         key={tech.name}
-        className="flex flex-col items-center space-y-2 rounded-xl border-base-100 p-6 shadow-lg hover:bg-base-100"
+        className="m-2 flex flex-col items-center space-y-2 rounded-xl border-base-100 p-6 shadow-lg hover:bg-base-100 sm:p-4"
       >
-        <div className="text--lg">{tech.icon}</div>
-        <p className="text-sm">{tech.name}</p>
+        <div className="text-sm">{tech.icon}</div>
+        <p className="text-xs">{tech.name}</p>
       </div>
     ));
   };
 
   return (
     <div className="space-y-4">
-      <div tabIndex={0} className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
+      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
         <input
           type="checkbox"
           checked={openSection === 'frontend'}
           onChange={() => toggleSection('frontend')}
         />
         <div
-          className={`collapse-title text-lg font-medium ${
+          className={`collapse-title text-base font-semibold ${
             openSection === 'frontend' ? 'bg-base-100 text-base-content' : ''
           }`}
         >
           Frontend
         </div>
         <div
-          className={`collapse-content mt-4 grid grid-cols-1 gap-6 rounded-sm border-base-100 md:grid-cols-2 lg:grid-cols-4 ${
+          className={`collapse-content mt-4 grid grid-cols-4 gap-4 sm:grid-cols-2 ${
             openSection === 'frontend' ? 'block' : 'hidden'
           }`}
         >
@@ -49,21 +47,21 @@ const TechIcons: FC = () => {
         </div>
       </div>
 
-      <div tabIndex={0} className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
+      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
         <input
           type="checkbox"
           checked={openSection === 'backend'}
           onChange={() => toggleSection('backend')}
         />
         <div
-          className={`collapse-title text-lg font-medium ${
+          className={`collapse-title text-base font-semibold ${
             openSection === 'backend' ? 'bg-base-100 text-base-content' : ''
           }`}
         >
           Backend
         </div>
         <div
-          className={`collapse-content mt-4 grid grid-cols-1 gap-6 rounded-sm border-base-100 md:grid-cols-2 lg:grid-cols-4 ${
+          className={`collapse-content mt-4 grid grid-cols-4 gap-4 sm:grid-cols-2 ${
             openSection === 'backend' ? 'block' : 'hidden'
           }`}
         >
@@ -71,21 +69,21 @@ const TechIcons: FC = () => {
         </div>
       </div>
 
-      <div tabIndex={0} className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
+      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
         <input
           type="checkbox"
           checked={openSection === 'devtools'}
           onChange={() => toggleSection('devtools')}
         />
         <div
-          className={`collapse-title text-lg font-medium ${
+          className={`collapse-title text-base font-semibold ${
             openSection === 'devtools' ? 'bg-base-100 text-base-content' : ''
           }`}
         >
           DevTools
         </div>
         <div
-          className={`collapse-content mt-4 grid grid-cols-1 gap-6 rounded-sm border-base-100 md:grid-cols-2 lg:grid-cols-4 ${
+          className={`collapse-content mt-4 grid grid-cols-4 gap-4 sm:grid-cols-2 ${
             openSection === 'devtools' ? 'block' : 'hidden'
           }`}
         >

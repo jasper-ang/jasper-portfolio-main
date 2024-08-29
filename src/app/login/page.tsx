@@ -107,12 +107,13 @@ const Login: React.FC = () => {
                 Submit
               </button>
             </div>
-            <span className="label-text-alt mt-2">
+            {/*hidding the sign up button for later use*}
+            {/* <span className="label-text-alt mt-2">
               Create an account{' '}
               <Link href="/signup" className="text-primary">
                 Sign up
               </Link>
-            </span>
+            </span> */}
           </form>
           <ToastContainer />
         </div>
