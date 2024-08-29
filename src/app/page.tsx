@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-base-200 text-base-content">
       {/* Hero Section */}
-      <section className="mx-12 my-12 min-h-fit rounded-xl bg-base-100 p-12 sm:mx-4 sm:my-8 sm:bg-base-200 sm:p-6">
+      <section className="animate-radiateNeutral mx-12 my-12 min-h-fit rounded-xl bg-base-100 p-12 sm:mx-10 sm:my-10 sm:bg-base-200 sm:p-6">
         <div className="flex flex-col items-start gap-10 sm:gap-6">
           {/* Image on Top */}
           <div className="flex-none">
@@ -72,7 +72,7 @@ export default function Home() {
 
         <div className="mx-auto mt-6 max-w-2xl space-y-4 text-left text-sm text-base-content sm:mt-4 sm:max-w-xl sm:space-y-3">
           <p className="border-l-4 border-primary pl-4 font-semibold">
-            I’m a full-stack developer, but I didn’t start out that way
+            I’m a full-stack developer, but I didn’t started out that way
           </p>
           <p className="border-l-4 border-secondary pl-4">
             During my MBA, I found myself <span className="underline">building projects</span>, and

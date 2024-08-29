@@ -3,12 +3,69 @@ import { Config } from 'tailwindcss';
 const config: Config = {
   content: ['./src/**/*.{js,jsx,ts,tsx,mdx}', './public/index.html'],
   theme: {
-    extend: {},
-    screens: {
-      lg: { max: '1023px' }, // Everything below 1024px
-      md: { max: '767px' }, // Everything below 768px
-      sm: { max: '639px' }, // Everything below 640px
-      // 'base' is now considered as the larger screens (1024px and up)
+    extend: {
+      keyframes: {
+        radiatePrimary: {
+          '0%, 100%': {
+            boxShadow:
+              '0 0 5px 5px rgba(179, 135, 250, 0.5), 0 0 10px 10px rgba(179, 135, 250, 0.4), 0 0 20px 20px rgba(179, 135, 250, 0.3)',
+            opacity: '1',
+          },
+          '50%': {
+            boxShadow:
+              '0 0 10px 10px rgba(179, 135, 250, 0.4), 0 0 15px 15px rgba(179, 135, 250, 0.3), 0 0 30px 30px rgba(179, 135, 250, 0.2)',
+            opacity: '0.8',
+          },
+        },
+        radiateSecondary: {
+          '0%, 100%': {
+            boxShadow:
+              '0 0 5px 5px rgba(253, 111, 156, 0.5), 0 0 10px 10px rgba(253, 111, 156, 0.4), 0 0 20px 20px rgba(253, 111, 156, 0.3)',
+            opacity: '1',
+          },
+          '50%': {
+            boxShadow:
+              '0 0 10px 10px rgba(253, 111, 156, 0.4), 0 0 15px 15px rgba(253, 111, 156, 0.3), 0 0 30px 30px rgba(253, 111, 156, 0.2)',
+            opacity: '0.8',
+          },
+        },
+        radiateAccent: {
+          '0%, 100%': {
+            boxShadow:
+              '0 0 5px 5px rgba(255, 134, 91, 0.5), 0 0 10px 10px rgba(255, 134, 91, 0.4), 0 0 20px 20px rgba(255, 134, 91, 0.3)',
+            opacity: '1',
+          },
+          '50%': {
+            boxShadow:
+              '0 0 10px 10px rgba(255, 134, 91, 0.4), 0 0 15px 15px rgba(255, 134, 91, 0.3), 0 0 30px 30px rgba(255, 134, 91, 0.2)',
+            opacity: '0.8',
+          },
+        },
+        radiateNeutral: {
+          '0%, 100%': {
+            boxShadow:
+              '0 0 5px 5px rgba(255, 255, 255, 0.5), 0 0 10px 10px rgba(255, 255, 255, 0.4), 0 0 20px 20px rgba(255, 255, 255, 0.3)',
+            opacity: '1',
+          },
+          '50%': {
+            boxShadow:
+              '0 0 10px 10px rgba(255, 255, 255, 0.4), 0 0 15px 15px rgba(255, 255, 255, 0.3), 0 0 30px 30px rgba(255, 255, 255, 0.2)',
+            opacity: '0.8',
+          },
+        },
+      },
+      animation: {
+        radiatePrimary: 'radiatePrimary 4s infinite',
+        radiateSecondary: 'radiateSecondary 4s infinite',
+        radiateAccent: 'radiateAccent 4s infinite',
+        radiateNeutral: 'radiateNeutral 4s infinite',
+      },
+      screens: {
+        lg: { max: '1023px' }, // Everything below 1024px
+        md: { max: '767px' }, // Everything below 768px
+        sm: { max: '639px' }, // Everything below 640px
+        // 'base' is now considered as the larger screens (1024px and up)
+      },
     },
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],

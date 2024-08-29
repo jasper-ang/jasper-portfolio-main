@@ -21,7 +21,7 @@ const Projects: React.FC = () => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="mr-4 h-8 w-8"
+          className="animate-radiatePrimary ml-4 mr-4 h-8 w-8"
         >
           <path d="M21 16.5v-9l-9-5-9 5v9l9 5 9-5zm-9-13.38l6.91 3.84L12 11.87l-6.91-3.41L12 3.12zM5 8.76l6.91 3.41v7.65l-6.91-3.83V8.76zm8.91 11.06v-7.65L20 8.76v7.32l-6.09 3.74z" />
         </svg>
