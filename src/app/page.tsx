@@ -1,79 +1,112 @@
+'use client'; // Ensure this component is client-side rendered
+
 import Image from 'next/image';
-import Head from 'next/head';
 import Projects from './components/project';
 import Contact from './components/contact';
-import BlogList from './blog/page';
-import Link from 'next/link';
-import { Blog, fetchBlogPosts } from './api/blogfetch';
 import BlogPage from './blog/page';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import Typewriter from 'typewriter-effect';
+import Aboutme from './components/aboutme';
+import Techstack from './components/techstack';
 
-export default async function Home() {
-  const posts: Blog[] = await fetchBlogPosts();
-  console.log('Fetched Posts:', posts);
+export default function Home() {
+  const [typewriterStarted, setTypewriterStarted] = useState(false);
+
+  useEffect(() => {
+    // Scroll to top on component mount
+    window.scrollTo(0, 0);
+    // Trigger this effect when the typewriter starts
+    const timer = setTimeout(() => {
+      setTypewriterStarted(true);
+    }, 100); // Adjust timing as necessary
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <>
-      <Head>
-        <title>Jasper Portfolio</title>
-        <meta
-          name="description"
-          content="Jasper's personal portfolio showcasing projects and skills."
-        />
-      </Head>
-      <main className="min-h-screen bg-base-100 text-base-content">
-        {/* Hero Section */}
-        <section className="my-5 p-8 text-center">
-          {/* <h1 className="p-8 text-5xl font-bold">Jasper Portfolio</h1> */}
-          <div className="diff my-4 aspect-[16/9] shadow-2xl">
-            <div className="diff-item-1">
-              <div className="grid place-content-center bg-secondary text-7xl font-black text-primary-content">
-                Welcome...
-              </div>
-            </div>
-            <div className="diff-item-2">
-              <div className="grid place-content-center bg-base-200 text-7xl font-black">
-                Welcome...
-              </div>
-            </div>
-            <div className="diff-resizer"></div>
-          </div>
-          <div className="flex justify-center p-8">
+    <main className="min-h-screen bg-base-200 text-base-content">
+      {/* Hero Section */}
+      <section className="mx-12 my-12 min-h-fit rounded-xl bg-base-100 p-12 shadow-xl sm:mx-8 sm:my-8 sm:p-6">
+        <div className="flex flex-col items-start gap-10 sm:gap-6">
+          {/* Image on Top */}
+          <div className="flex-none">
             <Image
               src="/jasper.jpg"
               alt="Profile Picture"
-              className="rounded-full"
-              width={150}
-              height={150}
+              className="rounded-full shadow-lg"
+              width={130}
+              height={130}
             />
           </div>
-          <p className="mx-auto mb-4 max-w-2xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio repellat sapiente
-            provident, voluptatem temporibus illo quod, voluptates reprehenderit aliquam enim nisi
-            eaque laudantium doloreque esse!
-          </p>
-          <p className="mx-auto mb-4 max-w-2xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi nemo provident est
-            ipsam, non impedit delectus voluptatem soluta, maxime ad obcaecati minus autem
-            temporibus veritatis facere! Saepe aliquam quasi nihil?
-          </p>
-        </section>
 
-        {/* About Me Section */}
-        <section className="bg-base-100 p-8 text-base-content">
-          <h2 className="mb-4 text-3xl font-bold">About Me</h2>
-          <p>This is the about section.</p>
-        </section>
+          {/* Typewriter text below the image */}
+          <div className="text-left text-4xl font-bold tracking-tight text-base-content sm:text-3xl">
+            <span className="mb-2 block text-6xl text-primary sm:text-5xl">Hi.</span>
+            <div
+              className="inline-block overflow-hidden align-top"
+              style={{ minWidth: '180px', minHeight: '50px' }}
+            >
+              <Typewriter
+                options={{
+                  strings: ["I'm Jasper", 'Welcome'],
+                  autoStart: true,
+                  loop: true,
+                  delay: 60,
+                  deleteSpeed: 60,
+                  cursor: '', // Disable cursor blinking
+                }}
+                onInit={typewriter => {
+                  const typewriterContainer = document.querySelector(
+                    '.typewriter-container'
+                  ) as HTMLElement;
+                  if (typewriterContainer) {
+                    typewriterContainer.style.visibility = 'visible';
+                  }
+                  typewriter.start();
+                }}
+              />
+            </div>
+          </div>
+        </div>
 
-        {/* Projects Section */}
+        <div className="mx-auto mt-6 max-w-2xl space-y-4 text-left text-sm text-base-content sm:mt-3 sm:max-w-xl sm:space-y-3 sm:text-xs">
+          <p className="border-l-4 border-primary pl-4 font-semibold">
+            I’m a full-stack developer, but I didn’t started out that way
+          </p>
+          <p className="border-l-4 border-secondary pl-4">
+            During my MBA, I found myself <span className="underline">building projects</span>, and
+            eventually fell in love with it. I started out with a{' '}
+            <span className="italic">Wix site</span>, then <span className="italic">Figma</span> and{' '}
+            <span className="italic">StackBlitz</span>, and later do you know, I am hosting a
+            full-stack app. <span className="font-semibold">This is my first baby</span>
+          </p>
+          <p className="border-l-4 border-accent pl-4">
+            There’s something incredibly satisfying about spending hours on a project and seeing it
+            come to life. <span className="underline">That’s what I love doing</span>
+          </p>
+        </div>
+      </section>
+
+      {/* TechStack Section */}
+      <section className="mx-4 my-12 bg-base-200 p-8 text-base-content sm:mx-2 sm:my-8 sm:p-4">
+        <Techstack />
+      </section>
+
+      {/* Projects Section */}
+      <section className="mx-4 my-12 bg-base-200 p-8 text-base-content sm:mx-2 sm:my-8 sm:p-4">
         <Projects />
+      </section>
 
-        {/* Contact Me Section */}
+      {/* Contact Me Section */}
+      <section className="mx-4 my-12 bg-base-200 p-8 text-base-content sm:mx-2 sm:my-8 sm:p-4">
         <Contact />
+      </section>
 
-        {/* Blog Section */}
-        <section className="bg-base-100 p-8 text-base-content">
-          <BlogPage />
-        </section>
-      </main>
-    </>
+      {/* Blog Section */}
+      {/* <section className="bg-base-200 p-8 text-base-content"> */}
+      <BlogPage />
+      {/* </section> */}
+    </main>
   );
 }

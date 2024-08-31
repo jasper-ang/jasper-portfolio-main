@@ -2,88 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-::selection {
-  background-color: #47a3f3;
-  color: #fefefe;
-}
+@media (min-width: 1024px) {
+  .desktop-spaced {
+    margin: 2rem 4rem;
+    padding: 2rem 4rem;
+  }
 
-:root {
-  --sh-class: #4c97f8; /* Dark mode color */
-  --sh-identifier: #ffffff;
-  --sh-sign: #8996a3;
-  --sh-string: #0fa295; /* Dark mode color */
-  --sh-keyword: #f47067; /* Dark mode color */
-  --sh-comment: #a19595;
-  --sh-jsxliterals: #6266d1;
-  --sh-property: #e25a1c;
-  --sh-entity: var(--sh-property);
-}
-
-html {
-  min-width: 360px;
-  color-scheme: dark;
-  background-color: #1a1a1a; /* Dark background */
-  color: #e5e7eb; /* Light text color */
-}
-
-.prose a {
-  color: #9ca3af; /* Dark mode link color */
-  text-decoration: underline;
-}
-
-.prose pre {
-  background-color: #1f2937; /* Dark mode background */
-  color: #d1d5db; /* Light text color */
-  padding: 1rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
-}
-
-.prose code {
-  background-color: #374151; /* Dark mode background */
-  color: #d1d5db; /* Light text color */
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-}
-
-.prose p {
-  margin: 1rem 0;
-  color: #e5e7eb; /* Light text color */
-}
-
-.prose h1 {
-  font-size: 2.25rem;
-  margin: 1.5rem 0 1rem;
-  color: #ffffff; /* Light text color */
-}
-
-.prose h2,
-.prose h3,
-.prose h4 {
-  margin: 1.5rem 0 1rem;
-  color: #e5e7eb; /* Light text color */
-}
-
-.prose ul,
-.prose ol {
-  margin-left: 1.5rem;
-  color: #d1d5db; /* Light text color */
-}
-
-input {
-  background-color: #374151; /* Dark mode input background */
-  color: #e5e7eb; /* Light text color */
-  border: 1px solid #4b5563; /* Border color */
-  appearance: none;
-}
-
-table {
-  background-color: #1f2937; /* Dark mode table background */
-  color: #d1d5db; /* Light text color */
-  overflow-x: auto;
-}
-
-.title {
-  text-align: center;
-  color: #ffffff; /* Light text color */
+  .hero-section-spaced {
+    margin: 4rem 6rem;
+    padding: 3rem 5rem;
+  }
 }

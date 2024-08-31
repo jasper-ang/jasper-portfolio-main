@@ -53,17 +53,28 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="hero bg-base-200 flex min-h-screen justify-center">
+    <div className="hero flex min-h-fit justify-center bg-base-200">
       <div className="flex-col">
-        <div className="p-8 text-left">
-          <h2 className="mb-6 text-3xl font-bold">Contact Me</h2>
-          <p className="mb-6 flex text-left">
+        <div className="text-left">
+          <h2 className="flex items-center text-3xl font-bold text-base-content">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={32}
+              height={32}
+              fill="currentColor"
+              className="shadow-glowPrimary ml-4 mr-8 h-8 w-8 bg-base-200 text-base-200"
+            >
+              <path d="M19.732 7.203V4.537h-7.464v2.666H3.205v20.259h25.59V7.203zm-6.398-1.599h5.331v1.599h-5.331zM12.268 8.27h15.461v8.53h-7.997v-2.133h-7.464V16.8H4.271V8.27zm6.398 7.463v3.199h-5.331v-3.199zM4.271 26.396v-8.53h7.997v2.133h7.464v-2.133h7.997v8.53z" />
+            </svg>
+            Contact Me
+          </h2>
+          <p className="my-6 flex px-4 py-6 text-left">
             Feel free to reach out for any inquiries or questions. I’m here to help and look forward
             to connecting with you!
           </p>
-          {successMessage && <p className="text-success mb-4">{successMessage}</p>}
+          {successMessage && <p className="mb-4 text-success">{successMessage}</p>}
         </div>
-        <div className="card bg-base-100 mx-auto w-full max-w-full shadow-2xl lg:max-w-lg">
+        <div className="shadow-1xl card mx-auto w-full max-w-lg bg-base-100 sm:max-w-full">
           <form onSubmit={handleSubmit} className="card-body">
             <div className="form-control">
               <label className="label">
@@ -76,7 +87,7 @@ const Contact: React.FC = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="input input-bordered"
+                className="input input-bordered text-xs"
               />
             </div>
             <div className="form-control">
@@ -90,7 +101,7 @@ const Contact: React.FC = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="input input-bordered"
+                className="input input-bordered text-xs"
               />
             </div>
             <div className="form-control">
@@ -103,11 +114,11 @@ const Contact: React.FC = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="textarea textarea-bordered"
+                className="textarea textarea-bordered h-32 text-xs"
               />
             </div>
             <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary w-full">
+              <button type="submit" className="btn btn-primary w-full font-semibold">
                 Send
               </button>
             </div>

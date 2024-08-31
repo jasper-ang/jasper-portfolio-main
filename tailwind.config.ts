@@ -3,7 +3,26 @@ import { Config } from 'tailwindcss';
 const config: Config = {
   content: ['./src/**/*.{js,jsx,ts,tsx,mdx}', './public/index.html'],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        glowPrimary:
+          '0 0 10px rgba(179, 135, 250, 0.4), 0 0 15px rgba(179, 135, 250, 0.3), 0 0 20px rgba(179, 135, 250, 0.2)',
+        glowSecondary:
+          '0 0 10px rgba(253, 111, 156, 0.4), 0 0 15px rgba(253, 111, 156, 0.3), 0 0 20px rgba(253, 111, 156, 0.2)',
+        glowAccent:
+          '0 0 10px rgba(255, 134, 91, 0.4), 0 0 15px rgba(255, 134, 91, 0.3), 0 0 20px rgba(255, 134, 91, 0.2)',
+        glowNeutral:
+          '0 0 6px rgba(45, 51, 59, 0.3), 0 0 10px rgba(45, 51, 59, 0.2), 0 0 15px rgba(45, 51, 59, 0.1)',
+      },
+      colors: {
+        'base-200': '#151515', // Ensuring base-200 is consistent
+      },
+      screens: {
+        lg: { max: '1023px' },
+        md: { max: '767px' },
+        sm: { max: '639px' },
+      },
+    },
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
 
@@ -34,14 +53,14 @@ const config: Config = {
           'error-content': '#160d0d',
         },
       },
-    ], // customize themes as needed
-    darkTheme: 'dark', // name of one of the included themes for dark mode
-    base: true, // applies background color and foreground color for root element by default
-    styled: true, // include daisyUI colors and design decisions for all components
-    utils: true, // adds responsive and modifier utility classes
-    prefix: '', // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
-    themeRoot: ':root', // The element that receives theme color CSS variables
+    ],
+    darkTheme: 'dark',
+    base: true,
+    styled: true,
+    utils: true,
+    prefix: '',
+    logs: true,
+    themeRoot: ':root',
   },
 };
 
