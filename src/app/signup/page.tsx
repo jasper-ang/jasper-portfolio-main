@@ -49,7 +49,7 @@ const Signup: React.FC = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        'http://localhost:5050/auth/signup',
+        'https://portfolio-backend-j7e4.onrender.com/auth/signup',
         { ...inputValue },
         { withCredentials: true }
       );

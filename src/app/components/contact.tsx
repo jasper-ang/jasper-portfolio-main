@@ -59,11 +59,12 @@ const Contact: React.FC = () => {
           <h2 className="flex items-center text-3xl font-bold text-base-content">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+              width={32}
+              height={32}
               fill="currentColor"
-              className="animate-radiateSecondary ml-4 mr-4 h-8 w-8"
+              className="shadow-glowPrimary ml-4 mr-8 h-8 w-8 bg-base-200 text-base-200"
             >
-              <path d="M21 16.5v-9l-9-5-9 5v9l9 5 9-5zm-9-13.38l6.91 3.84L12 11.87l-6.91-3.41L12 3.12zM5 8.76l6.91 3.41v7.65l-6.91-3.83V8.76zm8.91 11.06v-7.65L20 8.76v7.32l-6.09 3.74z" />
+              <path d="M19.732 7.203V4.537h-7.464v2.666H3.205v20.259h25.59V7.203zm-6.398-1.599h5.331v1.599h-5.331zM12.268 8.27h15.461v8.53h-7.997v-2.133h-7.464V16.8H4.271V8.27zm6.398 7.463v3.199h-5.331v-3.199zM4.271 26.396v-8.53h7.997v2.133h7.464v-2.133h7.997v8.53z" />
             </svg>
             Contact Me
           </h2>
@@ -117,7 +118,7 @@ const Contact: React.FC = () => {
               />
             </div>
             <div className="form-control mt-6">
-              <button type="submit" className="btn btn-secondary w-full">
+              <button type="submit" className="btn btn-primary w-full font-semibold">
                 Send
               </button>
             </div>

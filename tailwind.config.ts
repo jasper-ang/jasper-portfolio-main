@@ -4,67 +4,23 @@ const config: Config = {
   content: ['./src/**/*.{js,jsx,ts,tsx,mdx}', './public/index.html'],
   theme: {
     extend: {
-      keyframes: {
-        radiatePrimary: {
-          '0%, 100%': {
-            boxShadow:
-              '0 0 5px 5px rgba(179, 135, 250, 0.5), 0 0 10px 10px rgba(179, 135, 250, 0.4), 0 0 20px 20px rgba(179, 135, 250, 0.3)',
-            opacity: '1',
-          },
-          '50%': {
-            boxShadow:
-              '0 0 10px 10px rgba(179, 135, 250, 0.4), 0 0 15px 15px rgba(179, 135, 250, 0.3), 0 0 30px 30px rgba(179, 135, 250, 0.2)',
-            opacity: '0.8',
-          },
-        },
-        radiateSecondary: {
-          '0%, 100%': {
-            boxShadow:
-              '0 0 5px 5px rgba(253, 111, 156, 0.5), 0 0 10px 10px rgba(253, 111, 156, 0.4), 0 0 20px 20px rgba(253, 111, 156, 0.3)',
-            opacity: '1',
-          },
-          '50%': {
-            boxShadow:
-              '0 0 10px 10px rgba(253, 111, 156, 0.4), 0 0 15px 15px rgba(253, 111, 156, 0.3), 0 0 30px 30px rgba(253, 111, 156, 0.2)',
-            opacity: '0.8',
-          },
-        },
-        radiateAccent: {
-          '0%, 100%': {
-            boxShadow:
-              '0 0 5px 5px rgba(255, 134, 91, 0.5), 0 0 10px 10px rgba(255, 134, 91, 0.4), 0 0 20px 20px rgba(255, 134, 91, 0.3)',
-            opacity: '1',
-          },
-          '50%': {
-            boxShadow:
-              '0 0 10px 10px rgba(255, 134, 91, 0.4), 0 0 15px 15px rgba(255, 134, 91, 0.3), 0 0 30px 30px rgba(255, 134, 91, 0.2)',
-            opacity: '0.8',
-          },
-        },
-        radiateNeutral: {
-          '0%, 100%': {
-            boxShadow:
-              '0 0 5px 5px rgba(255, 255, 255, 0.5), 0 0 10px 10px rgba(255, 255, 255, 0.4), 0 0 20px 20px rgba(255, 255, 255, 0.3)',
-            opacity: '1',
-          },
-          '50%': {
-            boxShadow:
-              '0 0 10px 10px rgba(255, 255, 255, 0.4), 0 0 15px 15px rgba(255, 255, 255, 0.3), 0 0 30px 30px rgba(255, 255, 255, 0.2)',
-            opacity: '0.8',
-          },
-        },
+      boxShadow: {
+        glowPrimary:
+          '0 0 10px rgba(179, 135, 250, 0.4), 0 0 15px rgba(179, 135, 250, 0.3), 0 0 20px rgba(179, 135, 250, 0.2)',
+        glowSecondary:
+          '0 0 10px rgba(253, 111, 156, 0.4), 0 0 15px rgba(253, 111, 156, 0.3), 0 0 20px rgba(253, 111, 156, 0.2)',
+        glowAccent:
+          '0 0 10px rgba(255, 134, 91, 0.4), 0 0 15px rgba(255, 134, 91, 0.3), 0 0 20px rgba(255, 134, 91, 0.2)',
+        glowNeutral:
+          '0 0 6px rgba(45, 51, 59, 0.3), 0 0 10px rgba(45, 51, 59, 0.2), 0 0 15px rgba(45, 51, 59, 0.1)',
       },
-      animation: {
-        radiatePrimary: 'radiatePrimary 4s infinite',
-        radiateSecondary: 'radiateSecondary 4s infinite',
-        radiateAccent: 'radiateAccent 4s infinite',
-        radiateNeutral: 'radiateNeutral 4s infinite',
+      colors: {
+        'base-200': '#151515', // Ensuring base-200 is consistent
       },
       screens: {
-        lg: { max: '1023px' }, // Everything below 1024px
-        md: { max: '767px' }, // Everything below 768px
-        sm: { max: '639px' }, // Everything below 640px
-        // 'base' is now considered as the larger screens (1024px and up)
+        lg: { max: '1023px' },
+        md: { max: '767px' },
+        sm: { max: '639px' },
       },
     },
   },
@@ -97,14 +53,14 @@ const config: Config = {
           'error-content': '#160d0d',
         },
       },
-    ], // customize themes as needed
-    darkTheme: 'dark', // name of one of the included themes for dark mode
-    base: true, // applies background color and foreground color for root element by default
-    styled: true, // include daisyUI colors and design decisions for all components
-    utils: true, // adds responsive and modifier utility classes
-    prefix: '', // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
-    themeRoot: ':root', // The element that receives theme color CSS variables
+    ],
+    darkTheme: 'dark',
+    base: true,
+    styled: true,
+    utils: true,
+    prefix: '',
+    logs: true,
+    themeRoot: ':root',
   },
 };
 

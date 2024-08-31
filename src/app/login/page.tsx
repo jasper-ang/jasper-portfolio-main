@@ -47,7 +47,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        'http://localhost:5050/auth/login',
+        'https://portfolio-backend-j7e4.onrender.com/auth/login',
         { ...inputValue },
         { withCredentials: true }
       );

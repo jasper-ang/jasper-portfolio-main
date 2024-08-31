@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const response = await fetch('http://localhost:5050/auth/verify', {
+        const response = await fetch('https://portfolio-backend-j7e4.onrender.com/auth/verify', {
           method: 'POST',
           credentials: 'include', // This sends the cookies along with the request
         });
