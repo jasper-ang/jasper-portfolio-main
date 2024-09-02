@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import Link from 'next/link';
+import 'react-toastify/dist/ReactToastify.css';
+import 'tailwindcss/tailwind.css'; // Ensure TailwindCSS is imported
 
 // Define the shape of the input values
 interface InputValues {
@@ -34,12 +36,20 @@ const Login: React.FC = () => {
   const handleError = (err: string) =>
     toast.error(err, {
       position: 'bottom-left',
+      className: 'bg-error text-error-content rounded-md shadow-lg p-4',
+      icon: <span className="pr-8 text-lg">❌</span>,
+      bodyClassName: 'font-semibold text-sm font-sans',
+      closeButton: false,
     });
 
   // Handle success with toast notifications
   const handleSuccess = (msg: string) =>
     toast.success(msg, {
       position: 'bottom-left',
+      className: 'bg-success text-success-content rounded-md shadow-lg p-4',
+      icon: <span className="pr-8 text-lg">✅</span>,
+      bodyClassName: 'font-semibold text-sm font-sans',
+      closeButton: false,
     });
 
   // Handle form submission
@@ -107,7 +117,7 @@ const Login: React.FC = () => {
                 Submit
               </button>
             </div>
-            {/*hidding the sign up button for later use*}
+            {/* Hidding the signup button for future use */}
             {/* <span className="label-text-alt mt-2">
               Create an account{' '}
               <Link href="/signup" className="text-primary">
