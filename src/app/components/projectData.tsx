@@ -74,17 +74,24 @@ export const projects: Record<string, ProjectDetails> = {
       Aquila is a social network that focuses on improving relationships without the noise of media
     `,
     description: `
-      <div className="mockup-phone">
-        <div className="camera"></div>
-        <div className="display">
-          <div className="artboard artboard-demo phone-1 flex flex-col items-center justify-center p-4 space-y-2">
-            <div className="flex flex-col md:flex-row md:space-x-4">
-
-            </div>
-          </div>
-        </div>
-      </div>
-    `,
+    <ul class="menu bg-base-100 w-64 rounded-box p-2 space-y-2">
+      <li>
+        <a href="https://shorturl.at/bGXY2" class="flex items-center px-4 py-3 hover:bg-secondary hover:text-secondary-content hover:font-semibold active:bg-primary transition-colors duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span>Project Summary</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://shorturl.at/fjWZ7" class="flex items-center px-4 py-3 hover:bg-secondary hover:text-secondary-content hover:font-semibold active:bg-primary transition-colors duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <span>UX prototype</span>
+        </a>
+      </li>
+    </ul>    `,
     additionalDetails: `      
     <h2 class="mt-4 mb-4 text-lg font-bold">Problem</h2>
       <p class="mt-4">In today’s social media landscape, platforms like Instagram and Facebook prioritize content-driven engagement. 
@@ -99,9 +106,24 @@ export const projects: Record<string, ProjectDetails> = {
   },
   Journal: {
     title: `
-      For personal use
+      I'm an currently developing a personal journal app for myself and open to friends and family.
     `,
-    description: 'To be added',
-    additionalDetails: 'To be added',
+    description: `
+    <p>So, I've always enjoyed writing stuff down and keeping track of my thoughts. But lately, I have been using LLMs as part of the process, more often than not.</p>
+        
+    <p class="mt-4">Instead of writting in a regular doc, I've started to document my thoughts through chatGPT's custom AI. It's like... journaling, with a twist. And it's got me thinking, why not just combine them?</p>
+        
+    <p class="mt-4">So, I wanted to develop the LLM powered journal app that provides both traditional journalling capability and LLM powered capablities.</p>
+                
+    <p class="mt-4">You might ask me: </p> 
+    
+    <p> Why go through the hassle to build an app when you can just find one and download it? </p> 
+    
+    <p class="mt-4">My answer is, and I quote Fireship.io (tech youtuber) </p> 
+    <p class="mt-4 font-semibold text-secondary">We develop something not because it is easy, but because we thought it was easy </p>
+    <p class="mt-4">Jokes aside, I just want to bulid something cool and useful!</p>
+  `,
+    additionalDetails: `<p class="my-4"> I'll post updates here when it's available</p>
+`,
   },
 };
