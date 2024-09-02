@@ -54,7 +54,7 @@ const Contact: React.FC = () => {
 
   return (
     <div className="hero flex min-h-fit justify-center bg-base-200">
-      <div className="flex-col">
+      <div className="flex-col p-2">
         <div className="text-left">
           <h2 className="flex items-center text-3xl font-bold text-base-content">
             <svg
@@ -74,7 +74,7 @@ const Contact: React.FC = () => {
           </p>
           {successMessage && <p className="mb-4 text-success">{successMessage}</p>}
         </div>
-        <div className="shadow-1xl card mx-auto w-full max-w-lg bg-base-100 sm:max-w-full">
+        <div className="shadow-1xl card mx-auto w-full max-w-lg bg-base-100 shadow-lg sm:max-w-full">
           <form onSubmit={handleSubmit} className="card-body">
             <div className="form-control">
               <label className="label">
