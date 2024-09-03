@@ -6,7 +6,6 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import Link from 'next/link';
 import 'react-toastify/dist/ReactToastify.css';
-import 'tailwindcss/tailwind.css'; // Ensure TailwindCSS is imported
 
 // Define the shape of the input values
 interface InputValues {
