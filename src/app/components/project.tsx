@@ -29,7 +29,7 @@ const Projects: React.FC = () => {
         </h2>
       </div>
 
-      <div className="rounded bg-base-100 px-4 py-6 shadow-lg">
+      <div className="rounded-xl bg-base-100 px-4 py-6 shadow-lg">
         <div className="button-group mb-6 flex space-x-4">
           {projects &&
             Object.keys(projects).map(project => (
