@@ -99,7 +99,7 @@ export default function Hero({ scrollToContact }: { scrollToContact: () => void 
             </svg>
           </a>
           <a
-            href="https://drive.google.com/file/d/1KLk8LCcCUkuJ1qRQgj4nm5OMck_EBez0/view"
+            href="https://drive.google.com/file/d/1lAti8fYPXEUms7ufTvU2ElVknDn19Atm/view?usp=sharing"
             target="_blank"
             download
             className="btn btn-circle btn-ghost btn-xs"

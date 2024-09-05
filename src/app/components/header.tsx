@@ -10,7 +10,7 @@ const Header = () => {
   const navigation = useRouter();
   const { user, setUser } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null); // Update the ref to HTMLDivElement
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     nookies.destroy(null, 'token');
@@ -46,16 +46,9 @@ const Header = () => {
       <div className="flex flex-none items-center">
         <ul className="menu menu-horizontal px-1">
           <li>{user ? <div>Welcome, {user.user}</div> : <Link href="/login">Login</Link>}</li>
-          <li>
-            <Link href="/blog">Blog</Link>
-          </li>
         </ul>
         <div className="dropdown dropdown-end relative" ref={dropdownRef}>
-          <label
-            tabIndex={0}
-            className="btn btn-ghost"
-            onClick={toggleDropdown} // Toggle dropdown on click
-          >
+          <label tabIndex={0} className="btn btn-ghost" onClick={toggleDropdown}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -70,13 +63,10 @@ const Header = () => {
           {dropdownOpen && (
             <ul
               tabIndex={0}
-              className="menu-compact menu dropdown-content absolute right-0 z-50 mt-3 w-auto rounded-box border border-primary bg-base-200 p-2 shadow"
+              className="menu-compact menu dropdown-content absolute right-0 z-50 mt-3 w-auto rounded-xl border border-base-content bg-base-200 px-4 shadow-md"
             >
               <li>
-                <Link href="/about">About</Link>
-              </li>
-              <li>
-                <Link href="/contact">Contact</Link>
+                <Link href="/blog">Blog</Link>
               </li>
               {user && (
                 <li>
