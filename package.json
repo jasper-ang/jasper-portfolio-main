@@ -19,6 +19,7 @@
     "fs": "^0.0.1-security",
     "gray-matter": "^4.0.3",
     "install": "^0.13.0",
+    "lucide-react": "^0.439.0",
     "mongodb": "^6.8.0",
     "next-auth": "^4.24.7",
     "next-mdx-remote": "^5.0.0",
