@@ -1,9 +1,21 @@
+/**
+ * Avatar - Ava
+ *
+ * This page displays a message liked chat interface for interacting with a digital assistant.
+ * It redirects from avatar/option/page.tsx
+ * The page handles user input, displays chat history, and manages the conversation flow.
+ * The component also includes options for resetting the chat and navigating back to the options page.
+ * The main http request: post /chat followed by /stream, and post /reset for resetting
+ */
+
 'use client';
 
 import { useState, FormEvent, KeyboardEvent, useRef, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { RotateCcw, ChevronLeft, Send } from 'lucide-react';
 
+// Chat options for initial messages
 const chatOptions = [
   {
     id: 'work',
@@ -20,13 +32,7 @@ const chatOptions = [
 ];
 
 const Chat = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const selectedOption = searchParams.get('option');
-  const initialMessageSent = useRef(false);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
+  // State variables
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<{ role: string; content: string }[]>([
     { role: 'system', content: 'You are a helpful assistant.' },
@@ -36,10 +42,26 @@ const Chat = () => {
   const [currentEventSource, setCurrentEventSource] = useState<EventSource | null>(null);
   const [temperature, setTemperature] = useState(0.7);
 
+  // Refs
+  const initialMessageSent = useRef(false);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Hooks
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const selectedOption = searchParams.get('option');
+
+  /**
+   * Effect: Scroll to bottom of chat container when chat history or response stream updates
+   */
   useEffect(() => {
     scrollToBottom();
   }, [chatHistory, responseStream]);
 
+  /**
+   * Effect: Send initial message based on selected option
+   */
   useEffect(() => {
     if (selectedOption && !initialMessageSent.current) {
       const optionText = chatOptions.find(option => option.id === selectedOption)?.text || '';
@@ -50,16 +72,27 @@ const Chat = () => {
     }
   }, [selectedOption]);
 
+  /**
+   * Effect: Adjust textarea height based on content
+   */
   useEffect(() => {
     adjustTextareaHeight();
   }, [message]);
 
+  // Business logic functions
+
+  /**
+   * Scrolls the chat container to the bottom
+   */
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   };
 
+  /**
+   * Adjusts the height of the textarea based on its content
+   */
   const adjustTextareaHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -68,6 +101,11 @@ const Chat = () => {
     }
   };
 
+  /**
+   * Handles the submission of a new message
+   * @param {FormEvent} e - The form event (optional)
+   * @param {string} overrideMessage - An optional message to override user input
+   */
   const handleSubmit = async (e?: FormEvent, overrideMessage?: string) => {
     e?.preventDefault();
     const messageToSend = overrideMessage || message;
@@ -81,7 +119,7 @@ const Chat = () => {
     console.log('Sending request to backend:', requestBody);
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/chat', {
+      const res = await fetch('https://flask-avatar.onrender.com/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody),
@@ -93,7 +131,7 @@ const Chat = () => {
         if (currentEventSource) {
           currentEventSource.close();
         }
-        const eventSource = new EventSource('http://127.0.0.1:5000/stream');
+        const eventSource = new EventSource('https://flask-avatar.onrender.com/stream');
         setCurrentEventSource(eventSource);
         let fullResponse = '';
 
@@ -119,6 +157,10 @@ const Chat = () => {
     }
   };
 
+  /**
+   * Handles the 'Enter' key press in the textarea
+   * @param {KeyboardEvent<HTMLTextAreaElement>} e - The keyboard event
+   */
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -126,13 +168,16 @@ const Chat = () => {
     }
   };
 
+  /**
+   * Handles navigation back to the options page
+   */
   const handleBack = async () => {
     if (currentEventSource) {
       currentEventSource.close();
     }
 
     try {
-      await fetch('http://127.0.0.1:5000/reset', { method: 'POST' });
+      await fetch('https://flask-avatar.onrender.com/reset', { method: 'POST' });
     } catch (error) {
       console.error('Error resetting chat:', error);
     }
@@ -140,13 +185,16 @@ const Chat = () => {
     router.push('/avatar/options');
   };
 
-  const handleClearChat = async () => {
+  /**
+   * Resets the chat history and state
+   */
+  const handleReset = async () => {
     if (currentEventSource) {
       currentEventSource.close();
     }
 
     try {
-      await fetch('http://127.0.0.1:5000/reset', { method: 'POST' });
+      await fetch('https://flask-avatar.onrender.com/reset', { method: 'POST' });
       setChatHistory([{ role: 'system', content: 'You are a helpful assistant.' }]);
       setResponseStream('');
       setIsLoading(false);
@@ -157,90 +205,98 @@ const Chat = () => {
     }
   };
 
-  return (
-    <div className="flex max-h-screen flex-col bg-base-200">
-      {/* Header */}
-      <div className="flex items-center justify-between bg-base-100 p-4 shadow-md">
-        <button onClick={handleBack} className="btn btn-circle btn-ghost">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+  // Render functions
+
+  /**
+   * Renders the chat header
+   */
+  const renderHeader = () => (
+    <div className="flex items-center justify-between bg-base-100 p-4 shadow-md">
+      <div className="flex items-center">
+        <button onClick={handleBack} className="btn btn-circle btn-ghost mr-3">
+          <ChevronLeft className="h-6 w-6" />
         </button>
-        <div className="flex items-center">
-          <Image src="/ava.jpg" alt="Ava" width={40} height={40} className="mr-3 rounded-full" />
-          <div>
-            <h2 className="font-bold">Ava</h2>
-            <p className="text-xs opacity-70">AI Assistant</p>
-          </div>
+        <Image
+          src="/ava.jpg"
+          alt="Ava"
+          width={128}
+          height={128}
+          className="mr-3 h-10 w-10 overflow-hidden rounded-full object-cover"
+        />
+        <div className="flex flex-col">
+          <h2 className="font-bold">Ava</h2>
+          <p className="text-xs opacity-70">Digital Assistant</p>
         </div>
       </div>
+      <button onClick={handleReset} className="btn btn-circle btn-ghost">
+        <RotateCcw className="h-6 w-6 text-base-content" />
+      </button>
+    </div>
+  );
 
-      {/* Chat container */}
-      <div className="flex-grow overflow-y-auto p-4" ref={chatContainerRef}>
-        {chatHistory.slice(1).map((msg, index) => (
-          <div key={index} className={`chat ${msg.role === 'user' ? 'chat-end' : 'chat-start'}`}>
-            <div
-              className={`chat-bubble ${msg.role === 'user' ? 'bg-primary text-primary-content' : 'bg-base-300'}`}
-            >
-              {msg.content}
-            </div>
-          </div>
-        ))}
-        {responseStream && (
-          <div className="chat chat-start">
-            <div className="chat-bubble bg-base-300">{responseStream}</div>
-          </div>
-        )}
-      </div>
-
-      {/* Input area */}
-      <div className="bg-base-100 p-4">
-        <div className="flex items-center rounded-full bg-base-200">
-          <textarea
-            ref={textareaRef}
-            placeholder="Message..."
-            className="textarea textarea-ghost w-full resize-none bg-transparent focus:outline-none"
-            value={message}
-            onChange={e => setMessage(e.target.value)}
-            onKeyDown={handleKeyDown}
-            rows={1}
-            style={{
-              maxHeight: '100px',
-              minHeight: '40px',
-              overflowY: 'auto',
-            }}
-          />
-          <button
-            onClick={() => handleSubmit()}
-            disabled={isLoading}
-            className="btn btn-circle btn-ghost flex-shrink-0"
+  /**
+   * Renders the chat messages
+   */
+  const renderChatMessages = () => (
+    <div className="flex-grow overflow-y-auto p-4" ref={chatContainerRef}>
+      {chatHistory.slice(1).map((msg, index) => (
+        <div key={index} className={`chat ${msg.role === 'user' ? 'chat-end' : 'chat-start'}`}>
+          <div
+            className={`chat-bubble ${msg.role === 'user' ? 'bg-primary text-primary-content' : 'bg-base-300'}`}
           >
-            {isLoading ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-6 w-6"
-              >
-                <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
-              </svg>
-            )}
-          </button>
+            {msg.content}
+          </div>
         </div>
+      ))}
+      {responseStream && (
+        <div className="chat chat-start">
+          <div className="chat-bubble bg-base-300">{responseStream}</div>
+        </div>
+      )}
+    </div>
+  );
+
+  /**
+   * Renders the input area
+   */
+  const renderInputArea = () => (
+    <div className="bg-base-100 p-4">
+      <div className="flex items-center rounded-3xl bg-base-200">
+        <textarea
+          ref={textareaRef}
+          placeholder="Message..."
+          className="hide-scrollbar textarea textarea-ghost w-full resize-none overflow-auto transition-all focus:outline-none"
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          rows={1}
+          style={{
+            maxHeight: '100px',
+            minHeight: '40px',
+            overflowY: 'auto',
+          }}
+        />
+        <button
+          onClick={() => handleSubmit()}
+          disabled={isLoading}
+          className="btn btn-circle btn-ghost mr-2 flex-shrink-0"
+        >
+          {isLoading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            <Send className="h-6 w-6" />
+          )}
+        </button>
       </div>
+    </div>
+  );
+
+  // Main render
+  return (
+    <div className="flex h-[80vh] max-h-[800px] flex-col bg-base-200">
+      {renderHeader()}
+      {renderChatMessages()}
+      {renderInputArea()}
     </div>
   );
 };
