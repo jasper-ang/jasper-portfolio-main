@@ -8,12 +8,40 @@
  * - POST /chat: to send a message to the assistant.
  * - GET /stream: to receive the assistant's response as a stream.
  * - POST /reset: to reset the chat session.
+ *
+ * Features:
+ * - Manages chat history and current message
+ * - Handles message submission and reception
+ * - Supports streaming responses from the assistant
+ * - Provides chat reset and navigation functionality
+ * - Handles initial message based on selected chat option
+ *
+ * @returns {Object} An object containing the following properties and methods:
+ *   @property {string} message - The current message in the input field
+ *   @property {function} setMessage - Function to update the current message
+ *   @property {ChatMessage[]} chatHistory - Array of chat messages
+ *   @property {string} responseStream - Current streaming response from the assistant
+ *   @property {boolean} isLoading - Indicates if a message is being processed
+ *   @property {function} handleSubmit - Function to submit a new message
+ *   @property {function} handleReset - Function to reset the chat
+ *   @property {function} handleBack - Function to navigate back to options page
+ *
+ * @example
+ * const {
+ *   message,
+ *   setMessage,
+ *   chatHistory,
+ *   responseStream,
+ *   isLoading,
+ *   handleSubmit,
+ *   handleReset,
+ *   handleBack
+ * } = useChat();
  */
 
-import { useState, useRef, useEffect, FormEvent } from 'react';
+import { useState, useRef, useEffect, useCallback, FormEvent } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
-// Type definitions for chat messages
 type ChatRole = 'user' | 'assistant';
 
 type ChatMessage = {
@@ -22,7 +50,6 @@ type ChatMessage = {
   content: string;
 };
 
-// Chat options for initial messages
 const chatOptions = [
   {
     id: 'work',
@@ -39,108 +66,92 @@ const chatOptions = [
 ];
 
 const useChat = () => {
-  // State variables
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [responseStream, setResponseStream] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [currentEventSource, setCurrentEventSource] = useState<EventSource | null>(null);
 
-  // Refs
-  const messageIdCounter = useRef(0); // Unique ID counter for messages
-  const initialMessageSent = useRef(false); // Tracks if the initial message has been sent
+  const messageIdCounter = useRef(0);
+  const initialMessageSent = useRef(false);
 
-  // Hooks
   const searchParams = useSearchParams();
   const router = useRouter();
-  const selectedOption = searchParams.get('option');
+  const selectedOption = searchParams?.get('option') || null;
 
-  // API base URL from environment variables
   const API_BASE_URL = process.env.NEXT_PUBLIC_FLASK_AVA_BASE_URL;
 
-  /**
-   * Handles the submission of a new message.
-   * @param e Optional form event.
-   * @param overrideMessage Optional message to override the current input.
-   */
-  const handleSubmit = async (e?: FormEvent, overrideMessage?: string) => {
-    e?.preventDefault();
-    const messageToSend = overrideMessage || message;
-    if (!messageToSend.trim() || isLoading) return;
+  const handleSubmit = useCallback(
+    async (e?: FormEvent, overrideMessage?: string) => {
+      e?.preventDefault();
+      const messageToSend = overrideMessage || message;
+      if (!messageToSend.trim() || isLoading) return;
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    const newMessageId = `msg-${messageIdCounter.current++}`;
-    const newUserMessage: ChatMessage = {
-      id: newMessageId,
-      role: 'user',
-      content: messageToSend,
-    };
+      const newMessageId = `msg-${messageIdCounter.current++}`;
+      const newUserMessage: ChatMessage = {
+        id: newMessageId,
+        role: 'user',
+        content: messageToSend,
+      };
 
-    // Update chat history with the new user message
-    setChatHistory(prev => [...prev, newUserMessage].slice(-100));
-    setMessage('');
+      setChatHistory(prev => [...prev, newUserMessage].slice(-100));
+      setMessage('');
 
-    const requestBody = { message: messageToSend };
+      const requestBody = { message: messageToSend };
 
-    try {
-      // Send the message to the backend API
-      const res = await fetch(`${API_BASE_URL}/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody),
-      });
+      try {
+        const res = await fetch(`${API_BASE_URL}/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody),
+        });
 
-      if (res.ok) {
-        // Close any existing EventSource connection
-        currentEventSource?.close();
+        if (res.ok) {
+          currentEventSource?.close();
 
-        // Open a new EventSource to receive the assistant's response
-        const eventSource = new EventSource(`${API_BASE_URL}/stream`);
-        setCurrentEventSource(eventSource);
-        let fullResponse = '';
+          const eventSource = new EventSource(`${API_BASE_URL}/stream`);
+          setCurrentEventSource(eventSource);
+          let fullResponse = '';
 
-        eventSource.onmessage = event => {
-          fullResponse += event.data;
-          setResponseStream(fullResponse); // Update the response stream
-        };
-
-        eventSource.onerror = () => {
-          // Handle completion or error
-          eventSource.close();
-          const newAssistantMessageId = `msg-${messageIdCounter.current++}`;
-          const newAssistantMessage: ChatMessage = {
-            id: newAssistantMessageId,
-            role: 'assistant',
-            content: fullResponse,
+          eventSource.onmessage = event => {
+            fullResponse += event.data;
+            setResponseStream(fullResponse);
           };
 
-          // Update chat history with the assistant's response
-          setChatHistory(prev => [...prev, newAssistantMessage].slice(-100));
-          setResponseStream('');
-          setIsLoading(false);
-          setCurrentEventSource(null);
-        };
-      } else {
-        setIsLoading(false);
-        alert('Failed to send message. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setIsLoading(false);
-      alert('An error occurred. Please check your connection and try again.');
-    }
-  };
+          eventSource.onerror = () => {
+            eventSource.close();
+            const newAssistantMessageId = `msg-${messageIdCounter.current++}`;
+            const newAssistantMessage: ChatMessage = {
+              id: newAssistantMessageId,
+              role: 'assistant',
+              content: fullResponse,
+            };
 
-  /**
-   * Handles resetting the chat session.
-   */
-  const handleReset = () => {
+            setChatHistory(prev => [...prev, newAssistantMessage].slice(-100));
+            setResponseStream('');
+            setIsLoading(false);
+            setCurrentEventSource(null);
+          };
+        } else {
+          setIsLoading(false);
+          alert('Failed to send message. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setIsLoading(false);
+        alert('An error occurred. Please check your connection and try again.');
+      }
+    },
+    [API_BASE_URL, currentEventSource, isLoading, message]
+  );
+
+  const handleReset = useCallback(() => {
     currentEventSource?.close();
 
     fetch(`${API_BASE_URL}/reset`, { method: 'POST' })
       .then(() => {
-        // Reset state variables
         setChatHistory([]);
         setResponseStream('');
         setIsLoading(false);
@@ -150,12 +161,9 @@ const useChat = () => {
         console.error('Error resetting chat:', error);
         alert('An error occurred while resetting the chat. Please try again.');
       });
-  };
+  }, [API_BASE_URL, currentEventSource]);
 
-  /**
-   * Handles navigation back to the options page.
-   */
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     currentEventSource?.close();
 
     fetch(`${API_BASE_URL}/reset`, { method: 'POST' })
@@ -166,11 +174,8 @@ const useChat = () => {
         console.error('Error resetting chat:', error);
         router.push('/avatar/options');
       });
-  };
+  }, [API_BASE_URL, currentEventSource, router]);
 
-  /**
-   * Sends the initial message based on the selected option.
-   */
   useEffect(() => {
     if (selectedOption && !initialMessageSent.current) {
       const optionText = chatOptions.find(option => option.id === selectedOption)?.text || '';
@@ -179,20 +184,14 @@ const useChat = () => {
         initialMessageSent.current = true;
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedOption]);
+  }, [selectedOption, handleSubmit]);
 
-  /**
-   * Cleans up the EventSource when the component unmounts.
-   */
   useEffect(() => {
     return () => {
       currentEventSource?.close();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentEventSource]);
 
-  // Return state variables and handlers for use in the component
   return {
     message,
     setMessage,

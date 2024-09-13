@@ -1,25 +1,35 @@
 /**
- * Avatar - Ava
+ * Avatar - Ava Chat Interface
  *
- * This page displays a message-like chat interface for interacting with a digital assistant.
- * It redirects from avatar/options/page.tsx.
- * The page handles user input, displays chat history, and manages the conversation flow.
- * The component also includes options for resetting the chat and navigating back to the options page.
- * The main HTTP requests are:
- * - POST /chat: to send a message to the assistant.
- * - GET /stream: to receive the assistant's response as a stream.
- * - POST /reset: to reset the chat session.
+ * This module implements a chat interface for interacting with Ava, a digital assistant.
+ * It provides a user-friendly UI for sending messages, displaying chat history, and managing the conversation flow.
+ *
+ * Key Features:
+ * - Real-time chat interface with message history
+ * - Auto-expanding textarea for user input
+ * - Auto-scrolling chat container
+ * - Loading indicator for message sending
+ * - Reset chat functionality
+ * - Navigation back to options page
+ *
+ * Components:
+ * - ChatContent: The main component containing all chat UI and logic
+ * - Chat: A wrapper component that provides Suspense boundary for ChatContent
+ *
+ * Custom Hook:
+ * - useChat: Manages chat state and operations (imported from '../hooks/useChat')
+ *
+ * @module AvatarChat
  */
 
 'use client';
 
-import { KeyboardEvent, useRef, useEffect } from 'react';
+import { KeyboardEvent, useRef, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import { RotateCcw, ChevronLeft, Send } from 'lucide-react';
-import useChat from '../hooks/useChat'; // Import the custom hook
+import useChat from '../hooks/useChat';
 
-const Chat = () => {
-  // Use the custom hook to manage chat logic
+const ChatContent = () => {
   const {
     message,
     setMessage,
@@ -31,48 +41,31 @@ const Chat = () => {
     handleBack,
   } = useChat();
 
-  // Refs for DOM elements
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  /**
-   * Adjusts the height of the textarea based on its content.
-   */
   const adjustTextareaHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 100); // Max height of 100px
+      const newHeight = Math.min(textareaRef.current.scrollHeight, 100);
       textareaRef.current.style.height = `${newHeight}px`;
     }
   };
 
-  /**
-   * Scrolls the chat container to the bottom.
-   */
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   };
 
-  /**
-   * Effect: Adjust textarea height when message changes.
-   */
   useEffect(() => {
     adjustTextareaHeight();
   }, [message]);
 
-  /**
-   * Effect: Scroll to bottom when chat history or response stream updates.
-   */
   useEffect(() => {
     scrollToBottom();
   }, [chatHistory, responseStream]);
 
-  /**
-   * Handles the 'Enter' key press in the textarea.
-   * @param e The keyboard event.
-   */
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -80,9 +73,6 @@ const Chat = () => {
     }
   };
 
-  /**
-   * Renders the chat header.
-   */
   const renderHeader = () => (
     <div className="flex items-center justify-between bg-base-100 p-4 shadow-md">
       <div className="flex items-center">
@@ -107,9 +97,6 @@ const Chat = () => {
     </div>
   );
 
-  /**
-   * Renders the chat messages.
-   */
   const renderChatMessages = () => (
     <div className="flex-grow overflow-y-auto p-4" ref={chatContainerRef}>
       {chatHistory.map(msg => (
@@ -131,9 +118,6 @@ const Chat = () => {
     </div>
   );
 
-  /**
-   * Renders the input area.
-   */
   const renderInputArea = () => (
     <div className="bg-base-100 p-4">
       <div className="flex items-center rounded-3xl bg-base-200">
@@ -168,13 +152,20 @@ const Chat = () => {
     </div>
   );
 
-  // Main render
   return (
     <div className="flex h-[80vh] max-h-[800px] flex-col bg-base-200">
       {renderHeader()}
       {renderChatMessages()}
       {renderInputArea()}
     </div>
+  );
+};
+
+const Chat = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChatContent />
+    </Suspense>
   );
 };
 
