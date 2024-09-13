@@ -27,7 +27,7 @@ export default function AvaChatBubble() {
       <div
         className={`chat chat-end transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="chat-bubble max-w-xs rounded-2xl bg-neutral px-4 py-2 text-base-content shadow-md">
+        <div className="chat-bubble max-w-xs rounded-2xl bg-neutral px-4 py-2 font-semibold text-base-content shadow-md">
           Hello, I’m Ava, Jasper’s digital assistant. How can I help?
         </div>
       </div>
