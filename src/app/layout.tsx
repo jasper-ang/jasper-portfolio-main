@@ -4,6 +4,7 @@ import './globals.css';
 import Header from './components/header';
 import Footer from './components/footer';
 import { AuthProvider } from './contexts/authentication';
+import AvaChatBubble from './components/avaChatBubble';
 
 const cx = (...classes: string[]) => classes.filter(Boolean).join(' ');
 

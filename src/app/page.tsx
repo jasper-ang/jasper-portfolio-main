@@ -6,6 +6,7 @@ import BlogPage from './blog/page';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import Techstack from './components/techstack';
 import Hero from './components/hero';
+import AvaChatBubble from './components/avaChatBubble';
 
 export default function Home() {
   const [typewriterStarted, setTypewriterStarted] = useState(false);
@@ -46,6 +47,7 @@ export default function Home() {
       </section>
 
       <BlogPage />
+      <AvaChatBubble />
     </main>
   );
 }

@@ -62,6 +62,10 @@ export default function Hero({ scrollToContact }: { scrollToContact: () => void 
       <div className="mt-4 flex flex-col items-end gap-2 border-base-content bg-base-100 pl-4 pt-2">
         {/* Contact Me Button */}
         <button onClick={scrollToContact} className="btn btn-ghost btn-xs sm:btn-xs">
+          Talk to Ava, my digital assistant{' '}
+        </button>
+        {/* Contact Me Button */}
+        <button onClick={scrollToContact} className="btn btn-ghost btn-xs sm:btn-xs">
           Click here to send me a message
         </button>
         {/* Social Links */}
