@@ -1,5 +1,24 @@
 import Image from 'next/image';
 import Typewriter from 'typewriter-effect';
+import { useRouter } from 'next/navigation';
+import { MessageSquare } from 'lucide-react';
+
+const AvaChatButton = () => {
+  const router = useRouter();
+
+  const redirectToAva = () => {
+    router.push('/avatar/options'); // Replace '/ava' with the actual path to your Ava page
+  };
+
+  return (
+    <button onClick={redirectToAva} className="btn btn-ghost btn-xs flex items-center space-x-1">
+      <MessageSquare size={16} />
+      <span>
+        Chat with <span className="font-semiboldbold text-primary">Ava</span>, my digital assistant
+      </span>
+    </button>
+  );
+};
 
 export default function Hero({ scrollToContact }: { scrollToContact: () => void }) {
   return (
@@ -60,6 +79,8 @@ export default function Hero({ scrollToContact }: { scrollToContact: () => void 
 
       {/* Moved the buttons and social section below the content */}
       <div className="mt-4 flex flex-col items-end gap-2 border-base-content bg-base-100 pl-4 pt-2">
+        {/* Talk to Ava Button */}
+        <AvaChatButton />
         {/* Contact Me Button */}
         <button onClick={scrollToContact} className="btn btn-ghost btn-xs sm:btn-xs">
           Click here to send me a message
