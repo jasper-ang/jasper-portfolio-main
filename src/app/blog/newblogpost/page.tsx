@@ -1,11 +1,12 @@
-// blog/newblogpost/page.tsx
-
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Blog } from '@/app/api/blogfetch';
 import { useBlog } from '@/app/hooks/useBlog';
-import CustomEditor from '@/app/components/CustomEditor';
+
+// Dynamically import CustomEditor with SSR disabled
+const CustomEditor = dynamic(() => import('@/app/components/CustomEditor'), { ssr: false });
 
 const CreateNew: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -26,7 +27,9 @@ const CreateNew: React.FC = () => {
 
       if (createdBlog && createdBlog._id) {
         setSuccessMessage('Blog post created successfully!');
-        window.location.href = `/blog/${createdBlog._id}`;
+        if (typeof window !== 'undefined') {
+          window.location.href = `/blog/${createdBlog._id}`;
+        }
       } else {
         console.error('Failed to create blog post');
       }
