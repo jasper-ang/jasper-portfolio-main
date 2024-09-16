@@ -22,9 +22,9 @@ const AvaChatButton = () => {
 
 export default function Hero({ scrollToContact }: { scrollToContact: () => void }) {
   return (
-    <section className="mx-12 my-12 min-h-fit rounded-xl bg-base-100 p-12 shadow-xl sm:mx-8 sm:my-8 sm:p-6">
+    <section className="mx-12 my-6 min-h-fit rounded-xl bg-base-100 p-12 shadow-xl sm:mx-8 sm:my-8 sm:p-6">
       <div className="flex flex-col items-start gap-4">
-        <div className="flex items-center gap-16 sm:gap-4">
+        <div className="mb-2 flex items-center gap-16 sm:gap-4">
           <Image
             src="/jasper.jpg"
             alt="Profile Picture"
@@ -33,7 +33,7 @@ export default function Hero({ scrollToContact }: { scrollToContact: () => void 
             height={130}
           />
         </div>
-        <div className="text-left text-4xl font-bold tracking-tight text-base-content sm:text-3xl">
+        <div className="text-left text-4xl font-semibold tracking-tight text-base-content sm:text-3xl">
           <span className="mb-2 block text-6xl text-primary sm:text-5xl">Hi.</span>
           <div
             className="inline-block overflow-hidden align-top"

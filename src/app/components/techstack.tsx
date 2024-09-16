@@ -25,7 +25,7 @@ const TechIcons: FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
+      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-300">
         <input
           type="checkbox"
           checked={openSection === 'frontend'}
@@ -47,7 +47,7 @@ const TechIcons: FC = () => {
         </div>
       </div>
 
-      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
+      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-300">
         <input
           type="checkbox"
           checked={openSection === 'backend'}
@@ -69,7 +69,7 @@ const TechIcons: FC = () => {
         </div>
       </div>
 
-      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-200">
+      <div className="collapse collapse-arrow rounded-box border-base-300 bg-base-300">
         <input
           type="checkbox"
           checked={openSection === 'devtools'}

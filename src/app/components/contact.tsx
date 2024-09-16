@@ -53,8 +53,8 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="hero flex min-h-fit justify-center bg-base-200">
-      <div className="flex-col p-2">
+    <div className="hero flex min-h-fit justify-center">
+      <div className="flex-col">
         <div className="text-left">
           <h2 className="flex items-center text-3xl font-bold text-base-content">
             <svg
@@ -62,7 +62,7 @@ const Contact: React.FC = () => {
               width={32}
               height={32}
               fill="currentColor"
-              className="shadow-glowPrimary ml-4 mr-8 h-8 w-8 bg-base-200 text-base-200"
+              className="ml-4 mr-8 h-8 w-8 bg-base-300 text-base-300 shadow-glowPrimary"
             >
               <path d="M19.732 7.203V4.537h-7.464v2.666H3.205v20.259h25.59V7.203zm-6.398-1.599h5.331v1.599h-5.331zM12.268 8.27h15.461v8.53h-7.997v-2.133h-7.464V16.8H4.271V8.27zm6.398 7.463v3.199h-5.331v-3.199zM4.271 26.396v-8.53h7.997v2.133h7.464v-2.133h7.997v8.53z" />
             </svg>

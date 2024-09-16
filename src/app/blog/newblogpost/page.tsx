@@ -1,14 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Blog } from '@/app/api/blogfetch';
-import { useBlog } from '@/app/hooks/useBlog'; // Import the useBlog hook
+import { useBlog } from '@/app/hooks/useBlog';
+
+// Dynamically import CustomEditor with SSR disabled
+const CustomEditor = dynamic(() => import('@/app/components/CustomEditor'), { ssr: false });
 
 const CreateNew: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [successMessage, setSuccessMessage] = useState<string>('');
-  const { createBlog } = useBlog(); // Destructure createBlog from useBlog hook
+  const { createBlog } = useBlog();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,12 +25,11 @@ const CreateNew: React.FC = () => {
     try {
       const createdBlog = await createBlog(newBlog);
 
-      // Check if createdBlog is not null/undefined and has a valid _id
       if (createdBlog && createdBlog._id) {
         setSuccessMessage('Blog post created successfully!');
-
-        // Redirect to the new post page
-        window.location.href = `/blog/${createdBlog._id}`;
+        if (typeof window !== 'undefined') {
+          window.location.href = `/blog/${createdBlog._id}`;
+        }
       } else {
         console.error('Failed to create blog post');
       }
@@ -84,14 +87,7 @@ const CreateNew: React.FC = () => {
             <label className="label">
               <span className="label-text text-lg font-semibold">Content</span>
             </label>
-            <textarea
-              name="content"
-              placeholder="Write your blog content here..."
-              value={content}
-              onChange={e => setContent(e.target.value)}
-              required
-              className="textarea textarea-bordered h-96 w-full"
-            />
+            <CustomEditor value={content} onChange={value => setContent(value)} />
           </div>
           <div className="form-control">
             <button type="submit" className="btn btn-primary w-full">

@@ -1,3 +1,5 @@
+// blog/[slug]/page.tsx
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -6,6 +8,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/contexts/authentication';
 import { useBlog } from '@/app/hooks/useBlog';
 import Modal from '@/app/components/modal';
+import CustomEditor from '@/app/components/CustomEditor';
+import sanitizeHtml from 'sanitize-html';
 
 interface EditModalProps {
   blog: Blog;
@@ -42,9 +46,11 @@ const EditModal: React.FC<EditModalProps> = ({ blog, isOpen, onSave, onClose }) 
         </button>
       }
     >
-      <form id="edit_form" className="py-4" onSubmit={handleFormSubmit}>
-        <div className="mb-4">
-          <label className="label">Title</label>
+      <form id="edit_form" className="space-y-4" onSubmit={handleFormSubmit}>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text font-semibold">Title</span>
+          </label>
           <input
             className="input input-bordered w-full"
             type="text"
@@ -52,13 +58,13 @@ const EditModal: React.FC<EditModalProps> = ({ blog, isOpen, onSave, onClose }) 
             onChange={e => handleInputChange('title', e.target.value)}
           />
         </div>
-        <div className="mb-4">
-          <label className="label">Content</label>
-          <textarea
-            className="textarea textarea-bordered w-full"
-            rows={10}
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text font-semibold">Content</span>
+          </label>
+          <CustomEditor
             value={localBlog.content}
-            onChange={e => handleInputChange('content', e.target.value)}
+            onChange={value => handleInputChange('content', value)}
           />
         </div>
       </form>
@@ -91,7 +97,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onDelete, onClose }) 
 };
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const { singlePost, error, API_URL_SLUG, updateBlog, deleteBlog } = useBlog(params.slug);
+  const { singlePost, error, updateBlog, deleteBlog } = useBlog(params.slug);
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -149,9 +155,10 @@ export default function Page({ params }: { params: { slug: string } }) {
         <h1 className="mb-8 text-4xl font-extrabold leading-tight text-base-content">
           {singlePost.title}
         </h1>
-        <div className="prose prose-lg leading-relaxed text-base-content dark:prose-invert">
-          {singlePost.content}
-        </div>
+        <div
+          className="prose prose-lg leading-relaxed text-base-content dark:prose-invert"
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(singlePost.content) }}
+        ></div>
 
         {user?.role === 'admin' && (
           <>
@@ -168,9 +175,9 @@ export default function Page({ params }: { params: { slug: string } }) {
         )}
       </div>
 
-      {isEditing && (
+      {isEditing && editedBlog && (
         <EditModal
-          blog={editedBlog!}
+          blog={editedBlog}
           isOpen={isEditing}
           onSave={handleSave}
           onClose={() => setIsEditing(false)}
