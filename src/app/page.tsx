@@ -43,9 +43,7 @@ export default function Home() {
         <Contact />
       </section>
 
-      <section className="mx-4 my-12 p-8 text-base-content sm:mx-2 sm:my-8 sm:p-6">
-        <BlogPage />
-      </section>
+      <BlogPage />
 
       <AvaChatBubble />
     </main>

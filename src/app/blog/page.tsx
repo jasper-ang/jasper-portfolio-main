@@ -12,7 +12,7 @@ export default function BlogPage() {
   if (!allPosts) return <div className="mt-8 text-center text-info">Loading...</div>;
 
   return (
-    <div id="blog" className="mt-8 rounded-xl bg-base-200 py-4 text-base-content">
+    <div id="blog" className="my-12 mt-8 rounded-xl bg-base-200 text-base-content sm:my-8">
       <div className="mx-auto mb-8 max-w-2xl p-12">
         <h2 className="mb-8 text-left text-3xl font-bold">My Blog</h2>
 
