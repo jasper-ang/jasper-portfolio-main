@@ -12,8 +12,8 @@ export default function BlogPage() {
   if (!allPosts) return <div className="mt-8 text-center text-info">Loading...</div>;
 
   return (
-    <div id="blog" className="bg-base-300 p-8 text-base-content">
-      <div className="mx-auto mb-8 max-w-2xl p-8">
+    <div id="blog" className="mt-8 rounded-xl bg-base-200 py-4 text-base-content">
+      <div className="mx-auto mb-8 max-w-2xl p-12">
         <h2 className="mb-8 text-left text-3xl font-bold">My Blog</h2>
 
         {user?.role === 'admin' && (

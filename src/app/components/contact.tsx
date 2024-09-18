@@ -69,12 +69,12 @@ const Contact: React.FC = () => {
             Contact Me
           </h2>
           <p className="my-6 flex px-4 py-6 text-left">
-            Feel free to reach out for any inquiries or questions. I’m here to help and look forward
-            to connecting with you!
+            Feel free to reach out if you have any questions. I’m here to help and look forward to
+            connecting with you!
           </p>
           {successMessage && <p className="mb-4 text-success">{successMessage}</p>}
         </div>
-        <div className="shadow-1xl card mx-auto w-full max-w-lg bg-base-100 shadow-lg sm:max-w-full">
+        <div className="shadow-1xl card mx-auto w-full max-w-lg bg-base-200 shadow-lg sm:max-w-full">
           <form onSubmit={handleSubmit} className="card-body">
             <div className="form-control">
               <label className="label">
