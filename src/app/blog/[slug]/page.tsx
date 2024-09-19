@@ -104,6 +104,12 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [editedBlog, setEditedBlog] = useState<Blog | null>(null);
   const { user } = useAuth();
 
+  useEffect(() => {
+    if (singlePost && singlePost.title) {
+      document.title = singlePost.title;
+    }
+  }, [singlePost]);
+
   const handleEdit = () => {
     if (singlePost) {
       setIsEditing(true);
@@ -152,7 +158,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <div className="min-h-screen bg-base-200 text-base-content">
       <div className="mx-auto max-w-2xl p-12 sm:p-8">
-        <h1 className="mb-8 text-4xl font-extrabold leading-tight text-base-content">
+        <h1 className="mb-8 text-4xl font-semibold leading-tight text-base-content">
           {singlePost.title}
         </h1>
         <div

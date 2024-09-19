@@ -29,7 +29,7 @@ const Projects: React.FC = () => {
         </h2>
       </div>
 
-      <div className="rounded-xl bg-base-100 px-4 py-6 shadow-lg">
+      <div className="rounded-xl bg-base-200 px-4 py-6 shadow-lg">
         <div className="button-group mb-6 flex space-x-4">
           {projects &&
             Object.keys(projects).map(project => (
@@ -72,7 +72,7 @@ const Projects: React.FC = () => {
         </label>
 
         {showDetails && (
-          <div className="details-content rounded border border-neutral bg-base-100 p-4 shadow-glowNeutral">
+          <div className="details-content rounded border border-neutral bg-base-200 p-4 shadow-glowNeutral">
             <div dangerouslySetInnerHTML={{ __html: projects[activeProject].additionalDetails }} />
           </div>
         )}

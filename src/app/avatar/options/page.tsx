@@ -8,10 +8,13 @@
 
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { MessageCircle, User, Briefcase } from 'lucide-react';
+import Head from 'next/head';
+
+export const dynamic = 'force-dynamic';
 
 // Type definition for chat options
 type ChatOption = {
@@ -42,6 +45,10 @@ const chatOptions: ChatOption[] = [
 const AvaChatPage: React.FC = () => {
   // Hooks
   const router = useRouter();
+
+  useEffect(() => {
+    document.title = 'Ava options';
+  }, []);
 
   // Business logic functions
 
@@ -110,13 +117,18 @@ const AvaChatPage: React.FC = () => {
 
   // Main render
   return (
-    <div className="min-h-fit bg-base-200 p-4">
-      <section className="m-6 rounded-xl bg-base-100 p-8 shadow-xl">
-        {renderHeader()}
-        {renderIntroduction()}
-        {renderChatOptions()}
-      </section>
-    </div>
+    <>
+      <Head>
+        <title>Ava</title>
+      </Head>
+      <div className="min-h-fit bg-base-200 p-4">
+        <section className="m-6 rounded-xl bg-base-100 p-8 shadow-xl">
+          {renderHeader()}
+          {renderIntroduction()}
+          {renderChatOptions()}
+        </section>
+      </div>
+    </>
   );
 };
 

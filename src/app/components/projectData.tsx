@@ -74,7 +74,7 @@ export const projects: Record<string, ProjectDetails> = {
       Aquila is a social network that focuses on improving relationships without the noise of media
     `,
     description: `
-    <ul class="menu bg-base-100 w-64 rounded-box p-2 space-y-2">
+    <ul class="menu bg-base-200 w-64 rounded-box p-2 space-y-2">
       <li>
         <a href="https://shorturl.at/bGXY2" class="flex items-center px-4 py-3 hover:bg-secondary hover:text-secondary-content hover:font-semibold active:bg-primary transition-colors duration-200">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

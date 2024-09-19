@@ -22,7 +22,7 @@ const AvaChatButton = () => {
 
 export default function Hero({ scrollToContact }: { scrollToContact: () => void }) {
   return (
-    <section className="mx-12 my-6 min-h-fit rounded-xl bg-base-100 p-12 shadow-xl sm:mx-8 sm:my-8 sm:p-6">
+    <section className="mx-12 my-6 min-h-fit rounded-xl bg-base-200 p-12 shadow-xl sm:mx-8 sm:my-8 sm:p-6">
       <div className="flex flex-col items-start gap-4">
         <div className="mb-2 flex items-center gap-16 sm:gap-4">
           <Image
@@ -78,7 +78,7 @@ export default function Hero({ scrollToContact }: { scrollToContact: () => void 
       </div>
 
       {/* Moved the buttons and social section below the content */}
-      <div className="mt-4 flex flex-col items-end gap-2 border-base-content bg-base-100 pl-4 pt-2">
+      <div className="mt-4 flex flex-col items-end gap-2 border-base-content bg-base-200 pl-4 pt-2">
         {/* Talk to Ava Button */}
         <AvaChatButton />
         {/* Contact Me Button */}

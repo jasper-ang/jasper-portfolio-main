@@ -15,7 +15,7 @@ const TechIcons: FC = () => {
     return techStack.map(tech => (
       <div
         key={tech.name}
-        className="m-2 flex flex-col items-center space-y-2 rounded-xl border-base-100 p-6 shadow-lg hover:bg-base-100 sm:p-4"
+        className="m-2 flex flex-col items-center space-y-2 rounded-xl border-base-200 p-6 shadow-lg hover:bg-base-200 sm:p-4"
       >
         <div className="text-sm">{tech.icon}</div>
         <p className="text-xs">{tech.name}</p>
@@ -33,7 +33,7 @@ const TechIcons: FC = () => {
         />
         <div
           className={`collapse-title text-base font-semibold ${
-            openSection === 'frontend' ? 'bg-base-100 text-base-content' : ''
+            openSection === 'frontend' ? 'bg-base-200 text-base-content' : ''
           }`}
         >
           Frontend
@@ -55,7 +55,7 @@ const TechIcons: FC = () => {
         />
         <div
           className={`collapse-title text-base font-semibold ${
-            openSection === 'backend' ? 'bg-base-100 text-base-content' : ''
+            openSection === 'backend' ? 'bg-base-200 text-base-content' : ''
           }`}
         >
           Backend
@@ -77,7 +77,7 @@ const TechIcons: FC = () => {
         />
         <div
           className={`collapse-title text-base font-semibold ${
-            openSection === 'devtools' ? 'bg-base-100 text-base-content' : ''
+            openSection === 'devtools' ? 'bg-base-200 text-base-content' : ''
           }`}
         >
           DevTools
