@@ -104,6 +104,12 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [editedBlog, setEditedBlog] = useState<Blog | null>(null);
   const { user } = useAuth();
 
+  useEffect(() => {
+    if (singlePost && singlePost.title) {
+      document.title = singlePost.title;
+    }
+  }, [singlePost]);
+
   const handleEdit = () => {
     if (singlePost) {
       setIsEditing(true);
