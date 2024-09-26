@@ -8,6 +8,7 @@ import AvaChatBubble from './components/avaChatBubble';
 import { Rubik } from 'next/font/google';
 import Head from 'next/head';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { SessionProvider } from './contexts/sessions';
 
 // Load Rubik as a variable font
 const rubik = Rubik({
@@ -25,9 +26,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="mx-auto mt-4 max-w-xl antialiased sm:mt-0">
         {gaId && <GoogleAnalytics gaId={gaId} />}
         <AuthProvider>
-          <Header />
-          <main className="mt flex min-w-0 flex-auto flex-col">{children}</main>
-          <Footer />
+          <SessionProvider>
+            <Header />
+            <main className="mt flex min-w-0 flex-auto flex-col">{children}</main>
+            <Footer />
+          </SessionProvider>
         </AuthProvider>
       </body>
     </html>

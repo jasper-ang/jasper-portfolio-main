@@ -63,17 +63,24 @@ export default function Hero({ scrollToContact }: { scrollToContact: () => void 
       </div>
 
       <div className="mx-auto mt-6 max-w-2xl space-y-4 text-left text-sm text-base-content sm:max-w-xl sm:space-y-3 sm:text-xs">
-        <p className="border-l-4 border-primary pl-4 font-semibold">I’m a full-stack developer</p>
-        <p className="border-l-4 border-secondary pl-4">
-          During my MBA, I found myself <span className="underline">building projects</span>, and
-          eventually fell in love with it. I started out with a{' '}
-          <span className="italic">Wix site</span>, then <span className="italic">Figma</span> and{' '}
-          <span className="italic">StackBlitz</span>, and later do you know, I am hosting a
-          full-stack app. <span className="font-semibold">This is my first baby</span>
+        <p className="border-l-4 border-primary pl-4">
+          I’m a full-stack developer, working mostly with{' '}
+          <span className="font-semibold text-primary">Next.js</span> on frontend and{' '}
+          <span className="font-semibold text-primary">Node.js/Python</span> on backend.
         </p>
+
+        <p className="border-l-4 border-secondary pl-4">
+          I do indie dev work and open to new projects or full-time roles if something exciting
+          comes along. I’ve been experimenting with{' '}
+          <span className="font-semibold text-secondary">LLMs</span> and recently built a digital
+          assistant to explore different capabilities. I’m very interested in creating{' '}
+          <span className="font-semibold">utility-focused projects</span>, given how amazing the
+          foundational models currently are.
+        </p>
+
         <p className="border-l-4 border-accent pl-4">
           There’s something incredibly satisfying about spending hours on a project and seeing it
-          come to life. <span className="underline">That’s what I love doing</span>
+          come to life. <span className="font-semibold text-accent">That’s what I love doing.</span>
         </p>
       </div>
 
