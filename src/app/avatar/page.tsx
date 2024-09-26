@@ -9,7 +9,7 @@
  * - Auto-expanding textarea for user input
  * - Auto-scrolling chat container
  * - Loading indicator for message sending
- * - Reset chat functionality
+ * - Visual reset chat button (functionality to be implemented)
  * - Navigation back to options page
  *
  * Components:
@@ -28,18 +28,11 @@ import { KeyboardEvent, useRef, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import { RotateCcw, ChevronLeft, Send } from 'lucide-react';
 import useChat from '../hooks/useChat';
+import { useSession } from '../contexts/sessions';
 
 const ChatContent = () => {
-  const {
-    message,
-    setMessage,
-    chatHistory,
-    responseStream,
-    isLoading,
-    handleSubmit,
-    handleReset,
-    handleBack,
-  } = useChat();
+  const { message, setMessage, chatHistory, responseStream, isLoading, handleSubmit, handleBack } =
+    useChat();
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -58,6 +51,8 @@ const ChatContent = () => {
     }
   };
 
+  const { startNewSession } = useSession();
+
   useEffect(() => {
     adjustTextareaHeight();
   }, [message]);
@@ -70,6 +65,18 @@ const ChatContent = () => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
+    }
+  };
+
+  const handleResetClick = async () => {
+    try {
+      await startNewSession();
+      console.log('Session has been reset successfully');
+      // Add any additional reset logic here
+      // For example, clearing local state or resetting other components
+    } catch (error) {
+      console.error('Failed to reset session:', error);
+      // Handle any errors that occurred during session reset
     }
   };
 
@@ -91,9 +98,13 @@ const ChatContent = () => {
           <p className="text-xs opacity-70">Digital Assistant</p>
         </div>
       </div>
-      <button onClick={handleReset} className="btn btn-circle btn-ghost" aria-label="Reset Chat">
+      {/* <button
+        onClick={handleResetClick}
+        className="btn btn-circle btn-ghost"
+        aria-label="Reset Chat"
+      >
         <RotateCcw className="h-6 w-6 text-base-content" />
-      </button>
+      </button> */}
     </div>
   );
 

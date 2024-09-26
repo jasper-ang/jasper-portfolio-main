@@ -7,13 +7,12 @@
  * The main HTTP requests are:
  * - POST /chat: to send a message to the assistant.
  * - GET /stream: to receive the assistant's response as a stream.
- * - POST /reset: to reset the chat session.
  *
  * Features:
  * - Manages chat history and current message
  * - Handles message submission and reception
  * - Supports streaming responses from the assistant
- * - Provides chat reset and navigation functionality
+ * - Provides navigation functionality
  * - Handles initial message based on selected chat option
  *
  * @returns {Object} An object containing the following properties and methods:
@@ -23,7 +22,6 @@
  *   @property {string} responseStream - Current streaming response from the assistant
  *   @property {boolean} isLoading - Indicates if a message is being processed
  *   @property {function} handleSubmit - Function to submit a new message
- *   @property {function} handleReset - Function to reset the chat
  *   @property {function} handleBack - Function to navigate back to options page
  *
  * @example
@@ -34,13 +32,13 @@
  *   responseStream,
  *   isLoading,
  *   handleSubmit,
- *   handleReset,
  *   handleBack
  * } = useChat();
  */
 
 import { useState, useRef, useEffect, useCallback, FormEvent } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useSession } from '../contexts/sessions';
 
 type ChatRole = 'user' | 'assistant';
 
@@ -66,6 +64,7 @@ const chatOptions = [
 ];
 
 const useChat = () => {
+  const { sessionId } = useSession(); // Consume session ID
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [responseStream, setResponseStream] = useState('');
@@ -85,7 +84,7 @@ const useChat = () => {
     async (e?: FormEvent, overrideMessage?: string) => {
       e?.preventDefault();
       const messageToSend = overrideMessage || message;
-      if (!messageToSend.trim() || isLoading) return;
+      if (!messageToSend.trim() || isLoading || !sessionId) return;
 
       setIsLoading(true);
 
@@ -99,7 +98,7 @@ const useChat = () => {
       setChatHistory(prev => [...prev, newUserMessage].slice(-100));
       setMessage('');
 
-      const requestBody = { message: messageToSend };
+      const requestBody = { message: messageToSend, session_id: sessionId };
 
       try {
         const res = await fetch(`${API_BASE_URL}/chat`, {
@@ -109,18 +108,23 @@ const useChat = () => {
         });
 
         if (res.ok) {
+          // Close any existing EventSource
           currentEventSource?.close();
 
-          const eventSource = new EventSource(`${API_BASE_URL}/stream`);
+          // Open a new EventSource for streaming assistant response
+          const eventSource = new EventSource(`${API_BASE_URL}/stream?session_id=${sessionId}`);
           setCurrentEventSource(eventSource);
           let fullResponse = '';
 
           eventSource.onmessage = event => {
-            fullResponse += event.data;
-            setResponseStream(fullResponse);
+            const data = event.data;
+            if (data) {
+              fullResponse += data;
+              setResponseStream(fullResponse);
+            }
           };
 
-          eventSource.onerror = () => {
+          eventSource.onerror = async () => {
             eventSource.close();
             const newAssistantMessageId = `msg-${messageIdCounter.current++}`;
             const newAssistantMessage: ChatMessage = {
@@ -134,6 +138,21 @@ const useChat = () => {
             setIsLoading(false);
             setCurrentEventSource(null);
           };
+
+          // Listen for the end of the stream to finalize the response
+          eventSource.addEventListener('end', () => {
+            const newAssistantMessageId = `msg-${messageIdCounter.current++}`;
+            const newAssistantMessage: ChatMessage = {
+              id: newAssistantMessageId,
+              role: 'assistant',
+              content: fullResponse,
+            };
+
+            setChatHistory(prev => [...prev, newAssistantMessage].slice(-100));
+            setResponseStream('');
+            setIsLoading(false);
+            setCurrentEventSource(null);
+          });
         } else {
           setIsLoading(false);
           alert('Failed to send message. Please try again.');
@@ -144,47 +163,23 @@ const useChat = () => {
         alert('An error occurred. Please check your connection and try again.');
       }
     },
-    [API_BASE_URL, currentEventSource, isLoading, message]
+    [API_BASE_URL, currentEventSource, isLoading, message, sessionId]
   );
-
-  const handleReset = useCallback(() => {
-    currentEventSource?.close();
-
-    fetch(`${API_BASE_URL}/reset`, { method: 'POST' })
-      .then(() => {
-        setChatHistory([]);
-        setResponseStream('');
-        setIsLoading(false);
-        setCurrentEventSource(null);
-      })
-      .catch(error => {
-        console.error('Error resetting chat:', error);
-        alert('An error occurred while resetting the chat. Please try again.');
-      });
-  }, [API_BASE_URL, currentEventSource]);
 
   const handleBack = useCallback(() => {
     currentEventSource?.close();
-
-    fetch(`${API_BASE_URL}/reset`, { method: 'POST' })
-      .then(() => {
-        router.push('/avatar/options');
-      })
-      .catch(error => {
-        console.error('Error resetting chat:', error);
-        router.push('/avatar/options');
-      });
-  }, [API_BASE_URL, currentEventSource, router]);
+    router.push('/avatar/options');
+  }, [currentEventSource, router]);
 
   useEffect(() => {
-    if (selectedOption && !initialMessageSent.current) {
+    if (selectedOption && !initialMessageSent.current && sessionId) {
       const optionText = chatOptions.find(option => option.id === selectedOption)?.text || '';
       if (optionText) {
         handleSubmit(undefined, optionText);
         initialMessageSent.current = true;
       }
     }
-  }, [selectedOption, handleSubmit]);
+  }, [selectedOption, handleSubmit, sessionId]);
 
   useEffect(() => {
     return () => {
@@ -199,7 +194,6 @@ const useChat = () => {
     responseStream,
     isLoading,
     handleSubmit,
-    handleReset,
     handleBack,
   };
 };
