@@ -13,7 +13,7 @@ interface SessionProviderProps {
   children: ReactNode;
 }
 
-const API_BASE_URL = 'http://127.0.0.1:5000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_FLASK_AVA_BASE_URL;
 
 export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) => {
   const [sessionId, setSessionId] = useState<string>('');
