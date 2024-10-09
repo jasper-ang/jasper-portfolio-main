@@ -106,7 +106,7 @@ export const projects: Record<string, ProjectDetails> = {
   },
   Journal: {
     title: `
-      I'm an currently developing a personal journal app for myself and open to friends and family.
+      I'm currently developing a personal journal app for myself and open to friends and family.
     `,
     description: `
     <p>So, I've always enjoyed writing stuff down and keeping track of my thoughts. But lately, I have been using LLMs as part of the process, more often than not.</p>
