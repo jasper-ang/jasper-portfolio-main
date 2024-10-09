@@ -9,29 +9,12 @@ import { Rubik } from 'next/font/google';
 import Head from 'next/head';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { SessionProvider } from './contexts/sessions';
-import { Metadata } from 'next';
 
 // Load Rubik as a variable font
 const rubik = Rubik({
   subsets: ['latin'],
   display: 'swap',
 });
-
-export const metadata: Metadata = {
-  title: 'Jasper Ang | Full-Stack Developer Portfolio',
-  description: 'Welcome to my site.',
-  openGraph: {
-    title: 'Jasper Ang | Full-Stack Developer Portfolio',
-    description: 'Welcome to my site.',
-    images: '/welcome.jpg',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Jasper Ang | Developer Portfolio',
-    description: 'Welcome to my site.',
-    images: '/welcome.jpg',
-  },
-};
 
 const cx = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
