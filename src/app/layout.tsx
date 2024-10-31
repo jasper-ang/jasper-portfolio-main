@@ -9,6 +9,8 @@ import { Rubik } from 'next/font/google';
 import Head from 'next/head';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { SessionProvider } from './contexts/sessions';
+import { pingBE } from './api/pingBE';
+import React, { useEffect } from 'react';
 
 // Load Rubik as a variable font
 const rubik = Rubik({
@@ -20,6 +22,10 @@ const cx = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_MEASUREMENT_ID;
+
+  useEffect(() => {
+    pingBE();
+  }, []);
 
   return (
     <html lang="en" className={cx(rubik.className, 'bg-black text-white')}>
