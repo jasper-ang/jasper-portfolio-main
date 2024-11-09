@@ -74,8 +74,8 @@ export default function Hero({ scrollToContact }: { scrollToContact: () => void 
           comes along. I’ve been experimenting with{' '}
           <span className="font-semibold text-secondary">LLMs</span> and recently built a digital
           assistant to explore different capabilities. I’m very interested in creating{' '}
-          <span className="font-semibold">utility-focused projects</span>, given how amazing the
-          foundational models currently are.
+          <span className="font-semibold text-secondary">utility-focused projects</span>, given how
+          amazing the foundational models currently are.
         </p>
 
         <p className="border-l-4 border-accent pl-4">
