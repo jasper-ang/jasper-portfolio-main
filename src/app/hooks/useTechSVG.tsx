@@ -407,6 +407,43 @@ const NetlifyIcon = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const PythonIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={36} height={36} fill="none" {...props}>
+    <path
+      fill="url(pythonGradientA)"
+      d="M18.389 3c-7.87 0-7.38 3.42-7.38 3.42l.01 3.545h7.51v1.063H8.035S3 10.455 3 18.415c0 7.958 4.395 7.677 4.395 7.677h2.624v-3.694s-.142-4.405 4.325-4.405h7.448s4.185.068 4.185-4.054V7.124S26.612 3 18.389 3m-4.142 2.383c.747 0 1.352.606 1.352 1.354a1.352 1.352 0 1 1-2.703 0c0-.748.604-1.354 1.351-1.354"
+    />
+    <path
+      fill="url(pythonGradientB)"
+      d="M18.611 33.909c7.87 0 7.38-3.42 7.38-3.42l-.01-3.545h-7.51v-1.063h10.493S34 26.454 34 18.495c0-7.96-4.395-7.677-4.395-7.677H26.98v3.693s.142 4.405-4.325 4.405h-7.448s-4.185-.068-4.185 4.054v6.815s-.635 4.124 7.588 4.124m4.142-2.383a1.35 1.35 0 0 1-1.25-.836 1.357 1.357 0 0 1 1.25-1.872c.747 0 1.351.605 1.351 1.354s-.604 1.354-1.351 1.354"
+    />
+    <defs>
+      <linearGradient
+        id="pythonGradientA"
+        x1={5.979}
+        x2={21.343}
+        y1={5.701}
+        y2={21.081}
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#387EB8" />
+        <stop offset={1} stopColor="#366994" />
+      </linearGradient>
+      <linearGradient
+        id="pythonGradientB"
+        x1={15.409}
+        x2={31.908}
+        y1={15.508}
+        y2={31.279}
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#FFE052" />
+        <stop offset={1} stopColor="#FFC331" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
 const useTechSVG = (): {
   frontend: TechItem[];
   backend: TechItem[];
@@ -424,6 +461,7 @@ const useTechSVG = (): {
       { name: 'Express', icon: <ExpressIcon /> },
       { name: 'Node.js', icon: <NodeJSIcon /> },
       { name: 'MongoDB', icon: <MongoDBIcon /> },
+      { name: 'Python', icon: <PythonIcon /> },
     ],
     devtools: [
       { name: 'Postman', icon: <PostmanIcon /> },
