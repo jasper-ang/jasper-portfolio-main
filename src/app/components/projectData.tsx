@@ -109,6 +109,17 @@ export const projects: Record<string, ProjectDetails> = {
       I'm currently developing a personal journal app for myself and open to friends and family.
     `,
     description: `
+    <ul class="menu bg-base-200 w-64 rounded-box p-2 space-y-2 mb-4">      
+      <li>
+        <a href="https://journal-app-two-pi.vercel.app/" class="flex items-center px-4 py-3 hover:bg-secondary hover:text-secondary-content hover:font-semibold active:bg-primary transition-colors duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <span>Try the Beta Version here!</span>
+        </a>
+      </li>
+    </ul>
+
     <p>So, I've always enjoyed writing stuff down and keeping track of my thoughts. But lately, I have been using LLMs as part of the process, more often than not.</p>
         
     <p class="mt-4">Instead of writting in a regular doc, I've started to document my thoughts through chatGPT's custom AI. It's like... journaling, with a twist. And it's got me thinking, why not just combine them?</p>
